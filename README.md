@@ -16,7 +16,6 @@ Funkcjonalności:
 - Możliwość wpisania opisu do wybranego dodanego miejsca
 - Dark mode i light mode
 - Dwujęczność (EN/PL)
-- 
 - Tagi ???
 - Możliwosc wyszukania lokalizacji ???
 
