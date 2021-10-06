@@ -1,7 +1,6 @@
 # Project Details
 
 Funkcjonalności:
-TODO: funkcjonalności
 - Rejestracja i Logowanie
 - Rejestracja przez social media
 - Rejestracja potwierdzana mailem
@@ -13,12 +12,13 @@ TODO: funkcjonalności
 - Interaktywna mapa
 - Znaczniki miejsc odwiedzonych
 - Lista miejsc odwiedzionych
-- Możliwosc wyszukania lokalizacji ???
 - Popup po kliknięciu na marker z informacjami
 - Możliwość wpisania opisu do wybranego dodanego miejsca
 - Dark mode i light mode
-- Dwujęczność
+- Dwujęczność (EN/PL)
+- 
 - Tagi ???
+- Możliwosc wyszukania lokalizacji ???
 
 Technologie:
 - .NET
