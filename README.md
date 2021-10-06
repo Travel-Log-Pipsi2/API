@@ -1,10 +1,4 @@
-# Backend
-
-Autorzy:
-Mariusz Skuza (Lider/PM/DevOps/Backend)
-Michał Nocuń (Tester/Backend)
-Piotr Tekieli (Backend)
-Kacper Frankowski (Frontend)
+# Project Details
 
 Funkcjonalności:
 TODO: funkcjonalności
@@ -27,10 +21,16 @@ TODO: funkcjonalności
 - Tagi ???
 
 Technologie:
-.NET
-C#
-Docker
-HTML
-CSS
-JAVASCRIPT
-REACT
+- .NET
+- C#
+- Docker
+- HTML
+- CSS
+- JAVASCRIPT
+- REACT
+
+Autorzy:
+- Mariusz Skuza (Lider/PM/DevOps/Backend)
+- Michał Nocuń (Tester/Backend)
+- Piotr Tekieli (Backend)
+- Kacper Frankowski (Frontend)
