@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    environment:
+        - DB_PASSWORD
+        - DB_USER_ID
+    depends_on:
+        - sqlserverService
+
+  sqlserverService:  
+    image: mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04  
+    hostname: 'sqlserver'  
+    environment:  
+      ACCEPT_EULA: "Y"  
+      SA_PASSWORD: "${DB_PASSWORD}"  
+    volumes:  
+      - data-mssql:/var/opt/mssql3  
+    ports:  
+      - "${DB_PORT}:1433"  
+    expose:  
+      - 1433  
+
+volumes:
+    data-mssql: {}
