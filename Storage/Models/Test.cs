@@ -1,0 +1,14 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Storage.Models
+{
+    [Table("test_models")]
+    public class Test
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string TestValue { get; set; }
+    }
+}

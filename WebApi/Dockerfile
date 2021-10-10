@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ENV ConnectionStrings__ApiConntectionString="Server=sqlserver; Database=ApiDb; User Id=ENVID; Password=ENVPW"
+ENV ConnectionStrings__ApiConntectionString="Server=sqlserver; Database=ProjectDb; User Id=ENVID; Password=ENVPW"
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
