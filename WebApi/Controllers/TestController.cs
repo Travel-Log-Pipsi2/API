@@ -1,35 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Storage.DataAccessLayer;
+﻿using Core.Interfaces;
+using Core.Response;
+using Microsoft.AspNetCore.Mvc;
 using Storage.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class TestController : Controller
     {
-        private readonly ApiDbContext _context;
+        private readonly ICrudTestService _service;
 
-        public PostController(ApiDbContext context)
+        public TestController(ICrudTestService service)
         {
-            _context = context;
-        }
-
-        [HttpPost()]
-        public ActionResult<Test> Create(string value)
-        {
-            _context.TestModels.Add(new Test { TestValue = value });
-            _context.SaveChanges();
-
-            return Ok("Resource created");
+            _service = service;
         }
 
         [HttpGet]
-        public IEnumerable<Test> Index()
+        public Task<ServiceResponse> Index()
         {
-            return _context.TestModels.ToArray();
+            return _service.GetTests();
+        }
+
+        [HttpPost()]
+        public Task<ServiceResponse> Create(string value)
+        {
+            return _service.CreateTest(value);
         }
     }
 
