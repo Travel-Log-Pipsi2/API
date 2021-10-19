@@ -17,7 +17,7 @@ Funkcjonalności:
 - Dark mode i light mode
 - Dwujęczność (EN/PL)
 - Tagi ???
-- Możliwosc wyszukania lokalizacji ???
+- Możliwosc wyszukania lokalizacji
 
 Technologie:
 - .NET
