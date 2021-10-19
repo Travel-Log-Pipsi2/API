@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Storage\Storage.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="dotnet dev-certs https --trust" />
+  </Target>
+
 </Project>
