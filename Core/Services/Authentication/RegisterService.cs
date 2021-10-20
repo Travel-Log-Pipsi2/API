@@ -39,11 +39,6 @@ namespace Core.Services.Authentication
 
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
 
-                user = await _userManager.FindByNameAsync(user.UserName);
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var urlString = _additionalAuthMetods.BuildUrl(token, user.UserName, _config["Paths:ConfirmEmail"]);
-
-
                 return ServiceResponse.Success("User created successfully!", HttpStatusCode.Created);
             }
             catch
