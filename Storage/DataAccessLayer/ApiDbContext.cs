@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Storage.Models;
+using Storage.Models.Identity;
 
 namespace Storage.DataAccessLayer
 {
@@ -10,5 +11,6 @@ namespace Storage.DataAccessLayer
         }
 
         public DbSet<Test> TestModels { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

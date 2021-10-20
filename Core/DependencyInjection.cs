@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Common;
+using Core.Interfaces;
 using Core.Interfaces.Authentication;
 using Core.Repositories;
 using Core.Services;
@@ -22,7 +23,7 @@ namespace Core
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IRegisterService, RegisterService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IAdditionalAuthMetods>();
+            services.AddScoped<IAdditionalAuthMetods, AdditionalAuthMetods>();
 
             return services;
         }
