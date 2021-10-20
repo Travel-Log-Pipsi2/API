@@ -1,6 +1,9 @@
-﻿using Core.Interfaces;
+﻿using Core.Common;
+using Core.Interfaces;
+using Core.Interfaces.Authentication;
 using Core.Repositories;
 using Core.Services;
+using Core.Services.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Storage.Models;
 
@@ -15,7 +18,13 @@ namespace Core
 
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ICrudTestService, CrudTestService>();
-            
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAdditionalAuthMetods, AdditionalAuthMetods>();
+
             return services;
         }
     }
