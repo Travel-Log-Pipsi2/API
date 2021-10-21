@@ -32,10 +32,8 @@ namespace WebApi.Installers
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000")
-                               .AllowAnyHeader()
-                               .AllowAnyMethod()
-                               .AllowAnyOrigin();
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
                     });
             });
 
