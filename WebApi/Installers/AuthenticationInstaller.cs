@@ -16,8 +16,6 @@ namespace WebApi.Installers
         {
             services.AddIdentity<User, IdentityRole<Guid>>(opttion =>
             {
-                opttion.SignIn.RequireConfirmedEmail = true;
-
                 opttion.Password.RequireDigit = true;
                 opttion.Password.RequireLowercase = true;
                 opttion.Password.RequireUppercase = true;

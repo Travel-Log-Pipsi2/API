@@ -17,7 +17,10 @@ namespace Core.Services.Email
 
         public async Task SendEmailAsync(string toAddress, string subject, string message)
         {
-            var mailMessage = new MailMessage(_config["SMTP:Name"], toAddress, subject, message);
+            var mailMessage = new MailMessage(_config["SMTP:Name"], toAddress, subject, message)
+            {
+                IsBodyHtml = true
+            };
 
             using var client = new SmtpClient(_config["SMTP:Host"], int.Parse(_config["SMTP:Port"]))
             {

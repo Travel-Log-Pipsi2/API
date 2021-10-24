@@ -19,10 +19,15 @@ namespace Core.Services.Authentication
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                var tokenResponse = _jwtGenerator.GenerateJWTToken(_config, user, roles);
+                if (user.EmailConfirmed)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var tokenResponse = _jwtGenerator.GenerateJWTToken(_config, user, roles);
 
-                return ServiceResponse<string>.Success(tokenResponse, "Successful login");
+                    return ServiceResponse<string>.Success(tokenResponse, "Successful login");
+                }
+
+                return ServiceResponse.Error("Account not activated!");
             }
 
             return ServiceResponse.Error("Email or password is not correct!");

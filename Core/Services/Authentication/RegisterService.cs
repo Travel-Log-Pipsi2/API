@@ -1,4 +1,5 @@
-﻿using Core.Interfaces.Authentication;
+﻿using Core.Common;
+using Core.Interfaces.Authentication;
 using Core.Interfaces.Email;
 using Core.Requests;
 using Core.Response;
@@ -44,7 +45,7 @@ namespace Core.Services.Authentication
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var urlString = _additionalAuthMetods.BuildUrl(token, user.UserName, _config["Paths:ConfirmEmail"]);
 
-                await _emailService.SendEmailAsync(user.Email, "Confirm your email address", urlString);
+                await _emailService.SendEmailAsync(user.Email, "Confirm your email address", SettingsVariables.GetHtmlConfirmEmailPage(urlString));
 
                 return ServiceResponse.Success("User created successfully! Confirm your email.", HttpStatusCode.Created);
             }
