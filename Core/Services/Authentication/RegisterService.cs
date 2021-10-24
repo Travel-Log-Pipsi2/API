@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces.Authentication;
+using Core.Interfaces.Email;
 using Core.Requests;
 using Core.Response;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +14,8 @@ namespace Core.Services.Authentication
     internal class RegisterService : AuthServicesProvider, IRegisterService
     {
         private readonly IAdditionalAuthMetods _additionalAuthMetods;
-        public RegisterService(UserManager<User> userManager, IConfiguration config, IAdditionalAuthMetods additionalAuthMethods)
-            : base(userManager, config: config)
+        public RegisterService(UserManager<User> userManager, IConfiguration config, IEmailService emailService, IAdditionalAuthMetods additionalAuthMethods)
+            : base(userManager, config: config, emailService: emailService)
         {
             _additionalAuthMetods = additionalAuthMethods;
         }
@@ -39,7 +40,13 @@ namespace Core.Services.Authentication
 
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
 
-                return ServiceResponse.Success("User created successfully!", HttpStatusCode.Created);
+                user = await _userManager.FindByNameAsync(user.UserName);
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var urlString = _additionalAuthMetods.BuildUrl(token, user.UserName, _config["Paths:ConfirmEmail"]);
+
+                await _emailService.SendEmailAsync(user.Email, "Confirm your email address", urlString);
+
+                return ServiceResponse.Success("User created successfully! Confirm your email.", HttpStatusCode.Created);
             }
             catch
             {
