@@ -31,5 +31,13 @@ namespace WebApi.Controllers
             return await _authenticateService.Register(model);
         }
 
+        [HttpGet]
+        [Route("Confirm-email")]
+        public async Task<ServiceResponse> ConfirmEmail(string token, string username)
+        {
+            ConfirmEmailRequest model = new() { Token = token, UserName = username };
+
+            return await _authenticateService.ConfirmEmail(model);
+        }
     }
 }

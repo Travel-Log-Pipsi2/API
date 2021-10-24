@@ -18,7 +18,6 @@ namespace Core.Requests
             ErrorMessage = "Password is not valid (at least one special sign, digit, upper letter and lenght >= 8)")]
         public string Password { get; set; }
 
-        [NotMapped]
         [Compare(nameof(Password), ErrorMessage = "Password doesn't match.")]
         [Required(ErrorMessage = "Confirm password is required")]
         public string ConfirmPassword { get; set; }
