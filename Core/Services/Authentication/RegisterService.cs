@@ -46,5 +46,24 @@ namespace Core.Services.Authentication
                 return ServiceResponse.Error("An error accured while creating account.");
             }
         }
+
+        public async Task<ServiceResponse> ConfirmEmail(ConfirmEmailRequest model)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                var isConfirmed = user.EmailConfirmed;
+                var result = await _userManager.ConfirmEmailAsync(user, model.Token);
+
+                if (isConfirmed || !result.Succeeded)
+                    throw new();
+
+                return ServiceResponse.Success("Email confirmed succesfully");
+            }
+            catch
+            {
+                return ServiceResponse.Error("Link is invalid", HttpStatusCode.BadRequest);
+            }
+        }
     }
 }

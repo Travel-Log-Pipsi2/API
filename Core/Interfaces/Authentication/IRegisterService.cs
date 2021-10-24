@@ -7,5 +7,6 @@ namespace Core.Interfaces.Authentication
     public interface IRegisterService
     {
         public Task<ServiceResponse> Register(RegisterRequest model);
+        public Task<ServiceResponse> ConfirmEmail(ConfirmEmailRequest model);
     }
 }
