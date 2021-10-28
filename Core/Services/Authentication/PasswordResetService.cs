@@ -29,7 +29,7 @@ namespace Core.Services.Authentication
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var urlString = _additionalAuthMetods.BuildUrl(token, user.Email, _config["Paths:ResetPassword"]);
 
-                await _emailService.SendEmailAsync(user.Email, "Reset your password", urlString);
+                await _emailService.SendEmailAsync(user.Email, "Reset your password", SettingsVariables.GetHtmlResetPasswordPage(urlString));
             }
             catch
             {
