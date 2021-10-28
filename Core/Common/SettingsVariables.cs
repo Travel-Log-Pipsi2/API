@@ -2,7 +2,7 @@
 {
     public static class SettingsVariables
     {
-        public const string PasswordExpression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{8,}$";
+        public const string PasswordExpression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
 
         public static string GetHtmlConfirmEmailPage(string link)
         {

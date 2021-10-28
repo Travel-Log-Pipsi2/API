@@ -1,6 +1,5 @@
 ﻿using Core.Common;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Requests
 {
@@ -15,7 +14,7 @@ namespace Core.Requests
 
         [Required(ErrorMessage = "Password is required")]
         [RegularExpression(@SettingsVariables.PasswordExpression,
-            ErrorMessage = "Password is not valid (at least one special sign, digit, upper letter and lenght >= 8)")]
+            ErrorMessage = "Password is not valid (at least one digit, upper letter and lenght >= 8)")]
         public string Password { get; set; }
 
         [Compare(nameof(Password), ErrorMessage = "Password doesn't match.")]

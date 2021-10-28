@@ -20,7 +20,7 @@ namespace WebApi.Installers
                 opttion.Password.RequireLowercase = true;
                 opttion.Password.RequireUppercase = true;
                 opttion.Password.RequiredLength = 8;
-                opttion.Password.RequiredUniqueChars = 0;
+                opttion.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<ApiDbContext>()
                 .AddDefaultTokenProviders();
