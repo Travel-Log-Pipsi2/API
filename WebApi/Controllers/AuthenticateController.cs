@@ -13,9 +13,10 @@ namespace WebApi.Controllers
         private readonly IAuthenticationService _authenticateService;
         private readonly IPasswordResetService _passwordResetService;
 
-        public AuthenticateController(IAuthenticationService authenticationService)
+        public AuthenticateController(IAuthenticationService authenticationService, IPasswordResetService passwordResetService)
         {
             _authenticateService = authenticationService;
+            _passwordResetService = passwordResetService;
         }
 
         [HttpPost]
@@ -34,9 +35,9 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("Confirm-email")]
-        public async Task<ServiceResponse> ConfirmEmail(string token, string username)
+        public async Task<ServiceResponse> ConfirmEmail(string token, string email)
         {
-            ConfirmEmailRequest model = new() { Token = token, UserName = username };
+            ConfirmEmailRequest model = new() { Token = token, Email = email };
 
             return await _authenticateService.ConfirmEmail(model);
         }

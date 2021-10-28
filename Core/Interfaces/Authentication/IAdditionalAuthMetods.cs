@@ -6,7 +6,7 @@ namespace Core.Interfaces.Authentication
 {
     interface IAdditionalAuthMetods
     {
-        public string BuildUrl(string token, string username, string path);
+        public string BuildUrl(string token, string email, string path);
 
         public string CreateValidationErrorMessage(IdentityResult result);
 

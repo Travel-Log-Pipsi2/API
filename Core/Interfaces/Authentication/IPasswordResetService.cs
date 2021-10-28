@@ -7,6 +7,6 @@ namespace Core.Interfaces.Authentication
     public interface IPasswordResetService
     {
         public Task<ServiceResponse> ResetPassword(ResetPasswordRequest model);
-        public Task<ServiceResponse> SendResetPasswordEmail(string userName);
+        public Task<ServiceResponse> SendResetPasswordEmail(string email);
     }
 }

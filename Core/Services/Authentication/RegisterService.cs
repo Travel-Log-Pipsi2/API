@@ -41,9 +41,9 @@ namespace Core.Services.Authentication
 
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
 
-                user = await _userManager.FindByNameAsync(user.UserName);
+                user = await _userManager.FindByEmailAsync(user.Email);
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var urlString = _additionalAuthMetods.BuildUrl(token, user.UserName, _config["Paths:ConfirmEmail"]);
+                var urlString = _additionalAuthMetods.BuildUrl(token, user.Email, _config["Paths:ConfirmEmail"]);
 
                 await _emailService.SendEmailAsync(user.Email, "Confirm your email address", SettingsVariables.GetHtmlConfirmEmailPage(urlString));
 
@@ -59,7 +59,7 @@ namespace Core.Services.Authentication
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                var user = await _userManager.FindByEmailAsync(model.Email);
                 var isConfirmed = user.EmailConfirmed;
                 var result = await _userManager.ConfirmEmailAsync(user, model.Token);
 
