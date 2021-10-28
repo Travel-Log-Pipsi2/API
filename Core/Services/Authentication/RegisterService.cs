@@ -25,7 +25,7 @@ namespace Core.Services.Authentication
         {
             try
             {
-                if (await _userManager.FindByNameAsync(model.Username) != null || await _userManager.FindByEmailAsync(model.Email) != null)
+                if (await _userManager.FindByEmailAsync(model.Email) != null)
                     return ServiceResponse.Error("Account already exists!");
 
                 User user = new()
