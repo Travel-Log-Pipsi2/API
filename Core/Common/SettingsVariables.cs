@@ -16,8 +16,8 @@
         public static string GetHtmlResetPasswordPage(string link)
         {
             return "<h1>Welcome!!</h1> <hr>" +
-                    "<h3>Someone fogot password to your acount!</h3>" +
-                    "<p>I hope it's you If not, u've got a problem...!<br>" +
+                    "<h3>Someone forgot password to your acount!</h3>" +
+                    "<p>I hope it's you ;) If not, u've got a problem...!<br>" +
                     $"To reset your current password click<a href=\"{link}\"> reset</a>.<br>" +
                     "If you have any questions contact us with this <a href=\"mailto: smtptestforproject @gmail.com\">email</a>.</p>";
         }
