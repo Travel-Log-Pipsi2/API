@@ -21,7 +21,7 @@ services:
     volumes:  
       - data-mssql:/var/opt/mssql3  
     ports:  
-      - "${DB_PORT}:1433"  
+      - "${DB_PORT}:1433"
     expose:  
       - 1433  
 

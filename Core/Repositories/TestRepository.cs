@@ -29,7 +29,7 @@ namespace Core.Repositories
 
         public async Task<Test> CreateTest(string value)
         {
-            Test testRequest = new Test() { TestValue = value };
+            Test testRequest = new() { TestValue = value };
             await Create(testRequest);
             return testRequest;
         }

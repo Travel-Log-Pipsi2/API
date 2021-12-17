@@ -11,7 +11,7 @@ namespace Core.Services.Authentication
     internal class LoginService : AuthServicesProvider, ILoginService
     {
         public LoginService(UserManager<User> userManager, IConfiguration config, IJwtGenerator jwtGenerator)
-            : base(userManager, config: config, jwtGenerator: jwtGenerator) { }
+            : base(userManager, config, jwtGenerator) { }
 
         public async Task<ServiceResponse> Login(LoginRequest model)
         {
