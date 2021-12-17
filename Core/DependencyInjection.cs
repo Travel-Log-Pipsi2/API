@@ -24,6 +24,7 @@ namespace Core
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IPasswordResetService, PasswordResetService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAdditionalAuthMetods, AdditionalAuthMetods>();
             services.AddScoped<IEmailService, EmailService>();

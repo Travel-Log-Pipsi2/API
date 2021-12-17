@@ -16,12 +16,12 @@ namespace Core.Common
         public AdditionalAuthMetods(UserManager<User> _userManager, IConfiguration _config, IJwtGenerator _jwtGenerator)
             : base(_userManager, config: _config, jwtGenerator: _jwtGenerator) { }
 
-        public string BuildUrl(string token, string username, string path)
+        public string BuildUrl(string token, string email, string path)
         {
             var uriBuilder = new UriBuilder(path);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["token"] = token;
-            query["username"] = username;
+            query["Token"] = token;
+            query["Email"] = email;
             uriBuilder.Query = query.ToString();
             var urlString = uriBuilder.ToString();
 
@@ -45,10 +45,6 @@ namespace Core.Common
             if (userInfo.Contains('@'))
             {
                 user = await _userManager.FindByEmailAsync(userInfo);
-            }
-            else
-            {
-                user = await _userManager.FindByNameAsync(userInfo);
             }
 
             var roles = await _userManager.GetRolesAsync(user);
