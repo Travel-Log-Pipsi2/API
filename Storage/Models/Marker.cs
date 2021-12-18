@@ -18,6 +18,8 @@ namespace Storage.Models
         public float Latitude { get; set; }
         public DateTime Date { get; set; }
         public bool IsDeleted { get; set; }
+        //[Required]
+        public Guid UserID { get; set; }
 
 
     }

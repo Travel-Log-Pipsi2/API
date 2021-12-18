@@ -1,5 +1,7 @@
-﻿using Core.Response;
+﻿using Core.Requests;
+using Core.Response;
 using Storage.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,11 +9,11 @@ namespace Core.Interfaces
 {
     public interface IMarkerRepository
     {
-        public Task<Marker> CreateMarker();
         public Task<IEnumerable<Marker>> GetMarkers();
-        /*public Task<ServiceResponse> GetMarkersOfUser();
-        public Task<ServiceResponse> UpdateMarker();
-        public Task<ServiceResponse> DeleteMarker();*/
+        public Task<IEnumerable<Marker>> GetMarkersOfUser(Guid UserID);
+        public Task<Marker> CreateMarker(MarkerRequest model);                
+        public Task<Marker> UpdateMarker(int MarkerID, MarkerRequest model);
+        public Task<Marker> DeleteMarker(int MarkerID);
 
     }
 }

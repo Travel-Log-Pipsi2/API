@@ -8,6 +8,11 @@ namespace Storage.Models.Identity
     [Table("Users")]
     public class User : IdentityUser<Guid>
     {
-        public List<Marker> Markers { get; set; }
+        //public List<Marker> Markers { get; set; }
+
+        //public User()
+        //{
+        //    Markers = new();
+        //}
     }
 }
