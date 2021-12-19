@@ -61,6 +61,8 @@ namespace Core.Repositories
             var existingMarker = await _context.MarkerModel.Where(m => !m.IsDeleted).FirstOrDefaultAsync(m => m.Id == MarkerID);
             if (existingMarker != null)
             {
+                if (existingMarker.UserID != _loggedUserProvider.GetUserId())
+                    throw new UnauthorizedAccessException();
                 existingMarker.Name = model.Name;
                 existingMarker.Description = model.Description;
                 existingMarker.Longitude = model.Longitude;
@@ -79,6 +81,8 @@ namespace Core.Repositories
             var markerToDelete = await _context.MarkerModel.Where(m => !m.IsDeleted).FirstOrDefaultAsync(m => m.Id == MarkerID);
             if (markerToDelete != null)
             {
+                if (markerToDelete.UserID != _loggedUserProvider.GetUserId())
+                    throw new UnauthorizedAccessException();
                 markerToDelete.IsDeleted = true;
                 _context.SaveChanges();
 

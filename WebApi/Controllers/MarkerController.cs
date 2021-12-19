@@ -43,14 +43,14 @@ namespace WebAPI.Controllers
             return _service.CreateMarker(model);
         }
 
-        [HttpPost()]
+        [HttpPut()]
         [Route("UpdateMarker")]
         public Task<ServiceResponse> Update(int MarkerID, [FromBody] MarkerRequest model)
         {
             return _service.UpdateMarker(MarkerID, model);
         }
 
-        [HttpPost()]
+        [HttpDelete()]
         [Route("DeleteMarker")]
         public Task<ServiceResponse> Delete(int MarkerID)
         {

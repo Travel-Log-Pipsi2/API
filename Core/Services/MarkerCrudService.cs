@@ -13,11 +13,13 @@ namespace Core.Services
 {
     public class MarkerCrudService : IMarkerCrudService
     {
-        readonly IMarkerRepository _markerRepository;        
+        readonly IMarkerRepository _markerRepository;
+        readonly ILoggedUserProvider _loggedUserProvider;
 
-        public MarkerCrudService(IMarkerRepository markerRepository)
+        public MarkerCrudService(IMarkerRepository markerRepository, ILoggedUserProvider loggedUserProvider)
         {
             _markerRepository = markerRepository;
+            _loggedUserProvider = loggedUserProvider;
         }
 
         public async Task<ServiceResponse> GetMarkers()
@@ -46,7 +48,15 @@ namespace Core.Services
 
         public async Task<ServiceResponse> UpdateMarker(int MarkerID, MarkerRequest model)
         {
-            Marker marker = await _markerRepository.UpdateMarker(MarkerID, model);
+            Marker marker;
+            try
+            {
+                marker = await _markerRepository.UpdateMarker(MarkerID, model);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return ServiceResponse.Error("Unauthorized access");
+            }
 
             if (marker != null)
             {
@@ -58,7 +68,15 @@ namespace Core.Services
 
         public async Task<ServiceResponse> DeleteMarker(int MarkerID)
         {
-            Marker marker = await _markerRepository.DeleteMarker(MarkerID);
+            Marker marker;
+            try
+            {
+                marker = await _markerRepository.DeleteMarker(MarkerID);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return ServiceResponse.Error("Unauthorized access");
+            }
 
             if (marker != null)
             {
