@@ -68,8 +68,8 @@ namespace Core.Repositories
                 existingMarker.Longitude = model.Longitude;
                 existingMarker.Latitude = model.Latitude;
                 existingMarker.Date = model.Date.Date;
-                _context.SaveChanges();
-
+                
+                await Edit(existingMarker);
                 return existingMarker;
             }
             else
