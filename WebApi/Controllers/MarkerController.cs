@@ -1,15 +1,14 @@
 ﻿using Core.Interfaces;
 using Core.Requests;
 using Core.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Storage.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MarkerController : Controller
@@ -43,14 +42,14 @@ namespace WebAPI.Controllers
             return _service.CreateMarker(model);
         }
 
-        [HttpPost()]
+        [HttpPut()]
         [Route("UpdateMarker")]
         public Task<ServiceResponse> Update(int MarkerID, [FromBody] MarkerRequest model)
         {
             return _service.UpdateMarker(MarkerID, model);
         }
 
-        [HttpPost()]
+        [HttpDelete()]
         [Route("DeleteMarker")]
         public Task<ServiceResponse> Delete(int MarkerID)
         {
