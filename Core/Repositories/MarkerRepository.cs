@@ -42,15 +42,7 @@ namespace Core.Repositories
             markerRequest.Latitude = model.Latitude;
             markerRequest.Date = model.Date.Date;
                        
-            Guid userId;
-            try
-            {
-                userId = _loggedUserProvider.GetUserId();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
+            Guid userId = _loggedUserProvider.GetUserId();
             markerRequest.UserID = userId;
             await Create(markerRequest);
             return markerRequest;

@@ -38,12 +38,7 @@ namespace Core.Services
         {
             Marker createdMarker = await _markerRepository.CreateMarker(model);
 
-            if (createdMarker != null)
-            {
-                return ServiceResponse<Marker>.Success(createdMarker, "Marker was created successfully");
-            }
-            else
-                return ServiceResponse.Error("Marker was not created");
+            return ServiceResponse<Marker>.Success(createdMarker, "Marker was created successfully");
         }
 
         public async Task<ServiceResponse> UpdateMarker(int MarkerID, MarkerRequest model)
