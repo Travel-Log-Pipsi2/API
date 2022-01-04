@@ -10,6 +10,6 @@ namespace Core.Interfaces.Authentication
 
         public string CreateValidationErrorMessage(IdentityResult result);
 
-        public Task<ServiceResponse> GetUserTokenResponse(string userInfo);
+        public Task<ServiceResponse> GetUserTokenResponse(string provider, string providerKey);
     }
 }

@@ -42,7 +42,7 @@ namespace Core.Services.Auth
             if (result.Succeeded)
             {
                 var username = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", "_");
-                return await _additionalAuthMetods.GetUserTokenResponse(username);
+                return await _additionalAuthMetods.GetUserTokenResponse(info.LoginProvider, info.ProviderKey);
             }
 
             User user = CreateExternalUser(info);
@@ -54,7 +54,7 @@ namespace Core.Services.Auth
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
                 if (identResult.Succeeded)
                 {
-                    return await _additionalAuthMetods.GetUserTokenResponse(user.UserName);
+                    return await _additionalAuthMetods.GetUserTokenResponse(info.LoginProvider, info.ProviderKey);
                 }
             }
 
