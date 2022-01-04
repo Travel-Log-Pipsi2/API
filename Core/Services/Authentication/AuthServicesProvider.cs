@@ -9,6 +9,7 @@ namespace Core.Services.Authentication
     internal abstract class AuthServicesProvider
     {
         protected readonly UserManager<User> _userManager;
+        protected readonly SignInManager<User> _signInManager;
         protected readonly IConfiguration _config;
         protected readonly IJwtGenerator _jwtGenerator;
         protected readonly IEmailService _emailService;
@@ -16,12 +17,14 @@ namespace Core.Services.Authentication
         public AuthServicesProvider
             (
             UserManager<User> userManager,
+            SignInManager<User> signInManager = null,
             IConfiguration config = null,
             IJwtGenerator jwtGenerator = null,
             IEmailService emailService = null
             )
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _config = config;
             _jwtGenerator = jwtGenerator;
             _emailService = emailService;
