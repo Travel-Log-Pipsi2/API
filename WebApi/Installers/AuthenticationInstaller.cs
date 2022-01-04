@@ -41,6 +41,11 @@ namespace WebApi.Installers
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+            .AddFacebook(options =>
+            {
+                options.AppId = configuration["Facebook:AppId"];
+                options.AppSecret = configuration["Facebook:Secret"];
+            })
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
