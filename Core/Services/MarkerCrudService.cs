@@ -7,6 +7,7 @@ using Storage.Models;
 using Storage.Models.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Services
@@ -28,9 +29,15 @@ namespace Core.Services
             return ServiceResponse<IEnumerable<Marker>>.Success(markers);
         }
 
+        public async Task<ServiceResponse> GetTravels(int markerId)
+        {
+            IEnumerable<Travel> travels = await _markerRepository.GetTravels(markerId);
+            return ServiceResponse<IEnumerable<Travel>>.Success(travels);
+        }
+
         public async Task<ServiceResponse> GetMarkersOfUser(Guid UserID)
         {
-            IEnumerable<Marker> markersFiltered = await _markerRepository.GetMarkersOfUser(UserID);
+            var markersFiltered = await _markerRepository.GetMarkersOfUser(UserID);
             return ServiceResponse<IEnumerable<Marker>>.Success(markersFiltered);
         }
 
@@ -39,6 +46,19 @@ namespace Core.Services
             Marker createdMarker = await _markerRepository.CreateMarker(model);
 
             return ServiceResponse<Marker>.Success(createdMarker, "Marker was created successfully");
+        }
+
+        public async Task<ServiceResponse> CreateTravel(TravelRequest model)
+        {
+            MarkerRequest marker = model.markerRequest;            
+            Marker existingMarker = await _markerRepository.FindMarker(marker);
+
+            if (existingMarker == null)
+                existingMarker = await _markerRepository.CreateMarker(marker);
+
+            Travel createdTravel = await _markerRepository.CreateTravel(existingMarker.Id, model);
+
+            return ServiceResponse<Travel>.Success(createdTravel, "Travel was created successfully");
         }
 
         public async Task<ServiceResponse> UpdateMarker(int MarkerID, MarkerRequest model)
@@ -63,22 +83,21 @@ namespace Core.Services
 
         public async Task<ServiceResponse> DeleteMarker(int MarkerID)
         {
-            Marker marker;
             try
             {
-                marker = await _markerRepository.DeleteMarker(MarkerID);
+                await _markerRepository.DeleteMarker(MarkerID);
             }
             catch (UnauthorizedAccessException)
             {
                 return ServiceResponse.Error("Unauthorized access");
             }
-
-            if (marker != null)
+            catch (MissingMemberException)
             {
-                return ServiceResponse<Marker>.Success(marker, "Success, Marker deleted.");
+                return ServiceResponse.Error("Marker does not exist");
             }
-            else
-                return ServiceResponse.Error("Marker not found");
+
+            return ServiceResponse.Success("Success, Marker deleted.");
+           
         }
     }
 }

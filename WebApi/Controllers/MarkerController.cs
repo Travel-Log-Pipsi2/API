@@ -28,6 +28,14 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetTravels/{markerId?}")]
+        public Task<ServiceResponse> GetTravels(int markerId)
+        {
+            return _service.GetTravels(markerId);
+        }
+
+        
+        [HttpGet]
         [Route("GetMarkers/{userId?}")]
         public Task<ServiceResponse> GetFiltered(Guid userId)
         {
@@ -41,6 +49,14 @@ namespace WebAPI.Controllers
         {
             return _service.CreateMarker(model);
         }
+
+        [HttpPost()]
+        [Route("CreateTravel")]
+        public Task<ServiceResponse> CreateTravel(TravelRequest model)
+        {
+            return _service.CreateTravel(model);           
+        }
+
 
         [HttpPut()]
         [Route("UpdateMarker")]

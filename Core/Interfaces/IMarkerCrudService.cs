@@ -9,8 +9,10 @@ namespace Core.Interfaces
     public interface IMarkerCrudService
     {
         public Task<ServiceResponse> GetMarkers();
+        public Task<ServiceResponse> GetTravels(int markerId);
         public Task<ServiceResponse> GetMarkersOfUser(Guid UserID);
         public Task<ServiceResponse> CreateMarker(MarkerRequest model);
+        public Task<ServiceResponse> CreateTravel(TravelRequest model);
         public Task<ServiceResponse> UpdateMarker(int MarkerID, MarkerRequest model);
         public Task<ServiceResponse> DeleteMarker(int MarkerID);
 

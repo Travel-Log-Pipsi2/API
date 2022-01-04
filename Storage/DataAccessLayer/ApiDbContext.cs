@@ -19,6 +19,7 @@ namespace Storage.DataAccessLayer
 
         public DbSet<Test> TestModels { get; set; }
         public DbSet<Marker> MarkerModel { get; set; }
+        public DbSet<Travel> TravelModel { get; set; }
         public override DbSet<User> Users { get; set; }
     }
 }

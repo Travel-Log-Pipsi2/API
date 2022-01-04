@@ -1,5 +1,6 @@
 ﻿using Storage.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,15 +12,14 @@ namespace Storage.Models
         [Key]
         public int Id { get; set; }        
         public string Name { get; set; }
-        public string Description { get; set; }
-        //[Required]
+        public string Country { get; set; }
+        [Required]
         public float Longitude { get; set; }
-        //[Required]
+        [Required]
         public float Latitude { get; set; }
-        public DateTime Date { get; set; }
-        public bool IsDeleted { get; set; }
-        //[Required]
+        [Required]
         public Guid UserID { get; set; }
+        public List<Travel> Travels { get; set; }
 
 
     }

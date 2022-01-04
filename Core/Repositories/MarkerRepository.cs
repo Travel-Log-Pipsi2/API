@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.Interfaces.Authentication;
 using Core.Requests;
+using Core.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Storage.DataAccessLayer;
@@ -23,13 +24,28 @@ namespace Core.Repositories
         }
         public async Task<IEnumerable<Marker>> GetMarkers()
         {
-            var markersList = await _context.MarkerModel.Where(m => !m.IsDeleted).ToListAsync();
+            var markersList = await _context.MarkerModel.ToListAsync();
             return markersList;
+        }
+
+        public async Task<IEnumerable<Travel>> GetTravels(int markerId)
+        {
+            var travelList = await _context.TravelModel.Where(m => m.MarkerId == markerId).ToListAsync();
+            return travelList;
+        }
+
+        public async Task<Marker> FindMarker(MarkerRequest model)
+        {
+            var marker = await _context.MarkerModel
+                .Where(m => m.Longitude == model.Longitude)
+                .Where(m => m.Latitude == model.Latitude)
+                .FirstOrDefaultAsync();
+            return marker;
         }
 
         public async Task<IEnumerable<Marker>> GetMarkersOfUser(Guid UserID)
         {
-            var markersListFiltered = await _context.MarkerModel.Where(m => !m.IsDeleted).Where(m => m.UserID == UserID).ToListAsync();
+            var markersListFiltered = await _context.MarkerModel.Where(m => m.UserID == UserID).Include(m => m.Travels).ToListAsync();
             return markersListFiltered;
         }
 
@@ -37,10 +53,9 @@ namespace Core.Repositories
         {
             Marker markerRequest = new() { };
             markerRequest.Name = model.Name;
-            markerRequest.Description = model.Description;
+            markerRequest.Country = model.Country;
             markerRequest.Longitude = model.Longitude;
             markerRequest.Latitude = model.Latitude;
-            markerRequest.Date = model.Date.Date;
                        
             Guid userId = _loggedUserProvider.GetUserId();
             markerRequest.UserID = userId;
@@ -48,19 +63,32 @@ namespace Core.Repositories
             return markerRequest;
         }
 
+        public async Task<Travel> CreateTravel(int markerId, TravelRequest model)
+        {
+            Travel travel = new();
+            travel.Description = model.Description;
+            travel.StartDate = model.StartDate;
+            travel.EndDate = model.EndDate;
+            travel.MarkerId = markerId;
+
+            _context.TravelModel.Add(travel);
+            await _context.SaveChangesAsync();
+
+            return travel;
+        }
+
         public async Task<Marker> UpdateMarker(int MarkerID, MarkerRequest model)
         {
-            var existingMarker = await _context.MarkerModel.Where(m => !m.IsDeleted).FirstOrDefaultAsync(m => m.Id == MarkerID);
+            var existingMarker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == MarkerID);
             if (existingMarker != null)
             {
                 if (existingMarker.UserID != _loggedUserProvider.GetUserId())
                     throw new UnauthorizedAccessException();
                 existingMarker.Name = model.Name;
-                existingMarker.Description = model.Description;
+                existingMarker.Country = model.Country;
                 existingMarker.Longitude = model.Longitude;
                 existingMarker.Latitude = model.Latitude;
-                existingMarker.Date = model.Date.Date;
-                
+
                 await Edit(existingMarker);
                 return existingMarker;
             }
@@ -68,20 +96,20 @@ namespace Core.Repositories
                 return null;
         }
 
-        public async Task<Marker> DeleteMarker(int MarkerID)
+        public async Task DeleteMarker(int MarkerID)
         {
-            var markerToDelete = await _context.MarkerModel.Where(m => !m.IsDeleted).FirstOrDefaultAsync(m => m.Id == MarkerID);
+            var markerToDelete = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == MarkerID);
             if (markerToDelete != null)
             {
                 if (markerToDelete.UserID != _loggedUserProvider.GetUserId())
                     throw new UnauthorizedAccessException();
-                markerToDelete.IsDeleted = true;
-                _context.SaveChanges();
 
-                return markerToDelete;
+                await Delete(markerToDelete);
+
+                return;
             }
             else
-                return null;
+                throw new MissingMemberException();
         }
 
     }

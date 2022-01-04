@@ -10,10 +10,13 @@ namespace Core.Interfaces
     public interface IMarkerRepository
     {
         public Task<IEnumerable<Marker>> GetMarkers();
+        public Task<IEnumerable<Travel>> GetTravels(int markerId);
+        public Task<Marker> FindMarker(MarkerRequest model);
         public Task<IEnumerable<Marker>> GetMarkersOfUser(Guid UserID);
-        public Task<Marker> CreateMarker(MarkerRequest model);                
+        public Task<Marker> CreateMarker(MarkerRequest model);
+        public Task<Travel> CreateTravel(int markerId, TravelRequest model);
         public Task<Marker> UpdateMarker(int MarkerID, MarkerRequest model);
-        public Task<Marker> DeleteMarker(int MarkerID);
+        public Task DeleteMarker(int MarkerID);
 
     }
 }
