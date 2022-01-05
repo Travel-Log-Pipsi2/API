@@ -29,9 +29,9 @@ namespace Core.Services
             return ServiceResponse<IEnumerable<Marker>>.Success(markers);
         }
 
-        public async Task<ServiceResponse> GetTravels(int markerId)
+        public async Task<ServiceResponse> GetTravelsOfMarker(int markerId)
         {
-            IEnumerable<Travel> travels = await _markerRepository.GetTravels(markerId);
+            IEnumerable<Travel> travels = await _markerRepository.GetTravelsOfMarker(markerId);
             return ServiceResponse<IEnumerable<Travel>>.Success(travels);
         }
 
@@ -48,15 +48,17 @@ namespace Core.Services
             return ServiceResponse<Marker>.Success(createdMarker, "Marker was created successfully");
         }
 
-        public async Task<ServiceResponse> CreateTravel(TravelRequest model)
+        public async Task<ServiceResponse> CreateTravel(MarkerTravelRequest model)
         {
-            MarkerRequest marker = model.markerRequest;            
+            MarkerRequest marker = new(model.Name, model.Country, model.Longitude, model.Latitude);
+            TravelRequest travel = new(model.Description, model.StartDate, model.EndDate);
+
             Marker existingMarker = await _markerRepository.FindMarker(marker);
 
             if (existingMarker == null)
                 existingMarker = await _markerRepository.CreateMarker(marker);
 
-            Travel createdTravel = await _markerRepository.CreateTravel(existingMarker.Id, model);
+            Travel createdTravel = await _markerRepository.CreateTravel(existingMarker.Id, travel);
 
             return ServiceResponse<Travel>.Success(createdTravel, "Travel was created successfully");
         }
@@ -81,6 +83,26 @@ namespace Core.Services
                 return ServiceResponse.Error("Marker not found");
         }
 
+        public async Task<ServiceResponse> UpdateTravel(int TravelID, TravelRequest model)
+        {
+            Travel travel;
+            try
+            {
+                travel = await _markerRepository.UpdateTravel(TravelID, model);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return ServiceResponse.Error("Unauthorized access");
+            }
+
+            if (travel != null)
+            {
+                return ServiceResponse<Travel>.Success(travel, "Success, Travel updated.");
+            }
+            else
+                return ServiceResponse.Error("Travel not found");
+        }
+
         public async Task<ServiceResponse> DeleteMarker(int MarkerID)
         {
             try
@@ -98,6 +120,38 @@ namespace Core.Services
 
             return ServiceResponse.Success("Success, Marker deleted.");
            
+        }
+
+        public async Task<ServiceResponse> DeleteTravel(int TravelID)
+        {
+            Marker marker;
+
+            try
+            {
+                marker = await _markerRepository.FindMarkerOfTravel(TravelID);
+                await _markerRepository.DeleteTravel(TravelID);
+
+                var TravelList = await _markerRepository.GetTravelsOfMarker(marker.Id);
+
+                if (!TravelList.Any())
+                {
+                    await _markerRepository.DeleteMarker(marker.Id);
+                    return ServiceResponse.Success("Success, Travel deleted. Marker has no travels, Marker deleted.");
+                }
+                else
+                    return ServiceResponse.Success("Success, Travel deleted.");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return ServiceResponse.Error("Unauthorized access");
+            }
+            catch (MissingMemberException)
+            {
+                return ServiceResponse.Error("Travel does not exist");
+            }
+
+            
+
         }
     }
 }

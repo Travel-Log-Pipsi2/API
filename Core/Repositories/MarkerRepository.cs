@@ -28,7 +28,7 @@ namespace Core.Repositories
             return markersList;
         }
 
-        public async Task<IEnumerable<Travel>> GetTravels(int markerId)
+        public async Task<IEnumerable<Travel>> GetTravelsOfMarker(int markerId)
         {
             var travelList = await _context.TravelModel.Where(m => m.MarkerId == markerId).ToListAsync();
             return travelList;
@@ -40,6 +40,21 @@ namespace Core.Repositories
                 .Where(m => m.Longitude == model.Longitude)
                 .Where(m => m.Latitude == model.Latitude)
                 .FirstOrDefaultAsync();
+            return marker;
+        }
+
+        public async Task<Marker> FindMarkerOfTravel(int TravelID)
+        {
+            var travel = await _context.TravelModel.FirstOrDefaultAsync(t => t.Id == TravelID);
+
+            if (travel == null)
+                throw new MissingMemberException();
+
+            var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == travel.MarkerId);
+
+            if (marker.UserID != _loggedUserProvider.GetUserId())
+                throw new UnauthorizedAccessException();            
+
             return marker;
         }
 
@@ -96,6 +111,28 @@ namespace Core.Repositories
                 return null;
         }
 
+        public async Task<Travel> UpdateTravel(int TravelID, TravelRequest model)
+        {
+            var existingTravel = await _context.TravelModel.FirstOrDefaultAsync(t => t.Id == TravelID);
+            if (existingTravel != null)
+            {
+                var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == existingTravel.MarkerId);
+                if (marker.UserID != _loggedUserProvider.GetUserId())
+                    throw new UnauthorizedAccessException();
+                
+                existingTravel.Description = model.Description;
+                existingTravel.StartDate = model.StartDate;
+                existingTravel.EndDate = model.EndDate;
+
+                _context.TravelModel.Update(existingTravel);
+                await _context.SaveChangesAsync();
+
+                return existingTravel;
+            }
+            else
+                return null;
+        }
+
         public async Task DeleteMarker(int MarkerID)
         {
             var markerToDelete = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == MarkerID);
@@ -105,6 +142,25 @@ namespace Core.Repositories
                     throw new UnauthorizedAccessException();
 
                 await Delete(markerToDelete);
+
+                return;
+            }
+            else
+                throw new MissingMemberException();
+        }
+
+        public async Task DeleteTravel(int TravelID)
+        {
+            var travelToDelete = await _context.TravelModel.FirstOrDefaultAsync(t => t.Id == TravelID);            
+
+            if (travelToDelete != null)
+            {
+                var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == travelToDelete.MarkerId);
+                if (marker.UserID != _loggedUserProvider.GetUserId())
+                    throw new UnauthorizedAccessException();
+                
+                _context.TravelModel.Remove(travelToDelete);
+                await _context.SaveChangesAsync();
 
                 return;
             }

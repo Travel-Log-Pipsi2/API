@@ -10,6 +10,14 @@ namespace Core.Requests
         [Required]
         public float Longitude { get; set; }
         [Required]
-        public float Latitude { get; set; }        
+        public float Latitude { get; set; }
+
+        public MarkerRequest(string name, string country, float longitude, float latitude)
+        {
+            Name = name;
+            Country = country;
+            Longitude = longitude;
+            Latitude = latitude;
+        }
     }
 }
