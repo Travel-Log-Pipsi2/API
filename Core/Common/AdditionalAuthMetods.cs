@@ -39,13 +39,9 @@ namespace Core.Common
             return builder.ToString();
         }
 
-        public async Task<ServiceResponse> GetUserTokenResponse(string userInfo)
+        public async Task<ServiceResponse> GetUserTokenResponse(string provider, string providerKey)
         {
-            User user = new();
-            if (userInfo.Contains('@'))
-            {
-                user = await _userManager.FindByEmailAsync(userInfo);
-            }
+            User user = await _userManager.FindByLoginAsync(provider, providerKey);
 
             var roles = await _userManager.GetRolesAsync(user);
 

@@ -1,9 +1,11 @@
 ﻿using Core.Common;
 using Core.Interfaces;
+using Core.Interfaces.Auth;
 using Core.Interfaces.Authentication;
 using Core.Interfaces.Email;
 using Core.Repositories;
 using Core.Services;
+using Core.Services.Auth;
 using Core.Services.Authentication;
 using Core.Services.Email;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,7 @@ namespace Core
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAdditionalAuthMetods, AdditionalAuthMetods>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IExternalLoginService, ExternalLoginService>();
 
             return services;
         }
