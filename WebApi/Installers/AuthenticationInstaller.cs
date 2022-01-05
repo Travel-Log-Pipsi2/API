@@ -46,6 +46,11 @@ namespace WebApi.Installers
                 options.AppId = configuration["Facebook:AppId"];
                 options.AppSecret = configuration["Facebook:Secret"];
             })
+            .AddInstagram(options =>
+            {
+                options.ClientId = configuration["Instagram:ClientId"];
+                options.ClientSecret = configuration["Instagram:Secret"];
+            })
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
