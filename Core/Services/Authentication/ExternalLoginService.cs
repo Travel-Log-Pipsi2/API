@@ -41,7 +41,6 @@ namespace Core.Services.Auth
 
             if (result.Succeeded)
             {
-                var username = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", "_");
                 return await _additionalAuthMetods.GetUserTokenResponse(info.LoginProvider, info.ProviderKey);
             }
 
