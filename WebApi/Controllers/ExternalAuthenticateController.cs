@@ -17,7 +17,7 @@ namespace WebApi.Controllers
             _externalLoginService = externalLoginService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("External-response")]
         public async Task<ServiceResponse> ExternalResponse(FacebookAuthRequest request)
         {
