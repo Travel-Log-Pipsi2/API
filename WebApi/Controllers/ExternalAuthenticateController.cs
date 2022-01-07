@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces.Auth;
+using Core.Requests;
 using Core.Response;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -16,18 +17,11 @@ namespace WebApi.Controllers
             _externalLoginService = externalLoginService;
         }
 
-        [HttpGet]
-        [Route("External-login")]
-        public IActionResult ExternalLogin(string provider)
-        {
-            return _externalLoginService.Request(provider);
-        }
-
-        [HttpGet]
+        [HttpPost]
         [Route("External-response")]
-        public async Task<ServiceResponse> ExternalResponse()
+        public async Task<ServiceResponse> ExternalResponse(FacebookAuthRequest request)
         {
-            return await _externalLoginService.Login();
+            return await _externalLoginService.Login(request);
         }
     }
 }

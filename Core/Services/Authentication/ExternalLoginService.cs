@@ -1,9 +1,9 @@
 ﻿using Core.Interfaces.Auth;
 using Core.Interfaces.Authentication;
+using Core.Requests;
 using Core.Response;
 using Core.Services.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Storage.Models.Identity;
 using System.Net;
@@ -21,17 +21,10 @@ namespace Core.Services.Auth
             _additionalAuthMetods = additionalAuthMethods;
         }
 
-        public ChallengeResult Request(string provider)
+        public async Task<ServiceResponse> Login(FacebookAuthRequest request)
         {
-            string redirectUri = _config["External:RedirectUrl"];
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUri);
-
-            return new ChallengeResult(provider, properties) ;
-        }
-
-        public async Task<ServiceResponse> Login()
-        {
-            ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+            
+            ExternalLoginInfo info = new(new ClaimsPrincipal(), request.GraphDomain, request.UserId, request.Name);
             if (info == null)
             {
                 return ServiceResponse.Error("Error loading external login information", HttpStatusCode.NoContent);
