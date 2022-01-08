@@ -19,9 +19,13 @@ namespace Core
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
             services.AddScoped<IBaseRepository<Test>, BaseRepository<Test>>();
+            services.AddScoped<IBaseRepository<Marker>, BaseRepository<Marker>>();
 
             services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<IMarkerRepository, MarkerRepository>();
+
             services.AddScoped<ICrudTestService, CrudTestService>();
+            services.AddScoped<IMarkerCrudService, MarkerCrudService>();
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();

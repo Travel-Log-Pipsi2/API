@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Storage.DataAccessLayer;
 
 namespace Storage.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220104100846_Travels")]
+    partial class Travels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,8 +280,6 @@ namespace Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MarkerId");
-
                     b.ToTable("travels");
                 });
 
@@ -332,20 +332,6 @@ namespace Storage.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Storage.Models.Travel", b =>
-                {
-                    b.HasOne("Storage.Models.Marker", null)
-                        .WithMany("Travels")
-                        .HasForeignKey("MarkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Storage.Models.Marker", b =>
-                {
-                    b.Navigation("Travels");
                 });
 #pragma warning restore 612, 618
         }

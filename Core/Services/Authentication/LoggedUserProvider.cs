@@ -17,7 +17,6 @@ namespace Core.Services.Authentication
         public Guid GetUserId()
         {
             var loggedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-
             return loggedUserId != null ? new Guid(loggedUserId) : throw new UnauthorizedAccessException();
         }
     }
