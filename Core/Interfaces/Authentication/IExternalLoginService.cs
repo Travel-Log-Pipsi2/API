@@ -6,6 +6,7 @@ namespace Core.Interfaces.Auth
 {
     public interface IExternalLoginService
     {
+
         public Task<ServiceResponse> FacebookLogin(FacebookAuthRequest request);
     }
 }
