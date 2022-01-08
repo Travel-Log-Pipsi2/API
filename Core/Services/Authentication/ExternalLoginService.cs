@@ -37,7 +37,7 @@ namespace Core.Services.Auth
                 return await _additionalAuthMetods.GetUserTokenResponse(info.LoginProvider, info.ProviderKey);
             }
 
-            User user = CreateExternalUser(info);
+            User user = CreateExternalUser(request.Name);
             IdentityResult identResult = await _userManager.CreateAsync(user);
            
             if (identResult.Succeeded)
@@ -53,11 +53,11 @@ namespace Core.Services.Auth
             return ServiceResponse.Error("User not created", HttpStatusCode.UnprocessableEntity);
         }
 
-        private User CreateExternalUser(ExternalLoginInfo info)
+        private User CreateExternalUser(string username)
         {
             User user = new()
             {
-                UserName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", "_"),
+                UserName = username.Replace(" ", "_"),
                 EmailConfirmed = true
             };
             
