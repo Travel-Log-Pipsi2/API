@@ -21,7 +21,7 @@ namespace Core.Services.Auth
             _additionalAuthMetods = additionalAuthMethods;
         }
 
-        public async Task<ServiceResponse> Login(FacebookAuthRequest request)
+        public async Task<ServiceResponse> FacebookLogin(FacebookAuthRequest request)
         {
             
             ExternalLoginInfo info = new(new ClaimsPrincipal(), request.GraphDomain, request.UserId, request.Name);
@@ -53,7 +53,7 @@ namespace Core.Services.Auth
             return ServiceResponse.Error("User not created", HttpStatusCode.UnprocessableEntity);
         }
 
-        private User CreateExternalUser(string username)
+        User CreateExternalUser(string username)
         {
             User user = new()
             {
