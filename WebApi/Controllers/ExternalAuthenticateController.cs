@@ -18,8 +18,8 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("External-response")]
-        public async Task<ServiceResponse> ExternalResponse([FromBody] FacebookAuthRequest request)
+        [Route("Facebook-login")]
+        public async Task<ServiceResponse> FacebookLogin([FromBody] FacebookAuthRequest request)
         {
             return await _externalLoginService.Login(request);
         }
