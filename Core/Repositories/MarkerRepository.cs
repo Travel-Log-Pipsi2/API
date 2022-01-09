@@ -37,6 +37,7 @@ namespace Core.Repositories
         public async Task<Marker> FindMarker(MarkerRequest model)
         {
             var marker = await _context.MarkerModel
+                .Where(m => m.UserID == _loggedUserProvider.GetUserId())
                 .Where(m => m.Longitude == model.Longitude)
                 .Where(m => m.Latitude == model.Latitude)
                 .FirstOrDefaultAsync();
