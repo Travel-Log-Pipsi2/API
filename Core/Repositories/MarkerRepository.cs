@@ -61,7 +61,7 @@ namespace Core.Repositories
 
         public async Task<IEnumerable<Marker>> GetMarkersOfUser(Guid UserID)
         {
-            var markersListFiltered = await _context.MarkerModel.Where(m => m.UserID == UserID).Include(m => m.Travels).ToListAsync();
+            var markersListFiltered = await _context.MarkerModel.Where(m => m.UserID == UserID).Include(m => m.Travels.OrderBy(t => t.StartDate)).ToListAsync();
             return markersListFiltered;
         }
 
