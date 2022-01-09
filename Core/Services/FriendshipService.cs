@@ -54,7 +54,7 @@ namespace Core.Services
             return ServiceResponse.Error("Error deleting friend");
         }
 
-        public async Task<ServiceResponse> DeleteRequest(int requestId)
+        public async Task<ServiceResponse> DeleteInvitation(int requestId)
         {
             var deleted = await _friendshipRepository.DeleteFrienshipByInvitation(requestId);
             if (deleted)

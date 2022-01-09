@@ -10,7 +10,7 @@ namespace Core.Interfaces
         public Task<ServiceResponse> GetInvites();
         public Task<ServiceResponse> SendRequest(Guid toId);
         public Task<ServiceResponse> AcceptFriend(int requestId);
-        public Task<ServiceResponse> DeleteRequest(int requestId);
+        public Task<ServiceResponse> DeleteInvitation(int requestId);
         public Task<ServiceResponse> DeleteFriend(Guid friendId);
         public Task<ServiceResponse> ReadRequest(int requestId);
     }

@@ -29,7 +29,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("Invites")]
-        public Task<ServiceResponse> GetFriendInvites()
+        public Task<ServiceResponse> GetInvites()
         {
             return _friendshipService.GetInvites();
         }
@@ -42,17 +42,17 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("Accept/{requestId}")]
-        public Task<ServiceResponse> AcceptFriendRequest(int requestId)
+        [Route("Accept/{invitationId}")]
+        public Task<ServiceResponse> AcceptFriendInvitation(int invitationId)
         {
-            return _friendshipService.AcceptFriend(requestId);
+            return _friendshipService.AcceptFriend(invitationId);
         }
 
         [HttpDelete]
-        [Route("Delete-request/{requestId}")]
-        public Task<ServiceResponse> DeleteFriendRequest(int requestId)
+        [Route("Delete-invitation/{invitationId}")]
+        public Task<ServiceResponse> DeleteFriendRequest(int invitationId)
         {
-            return _friendshipService.DeleteRequest(requestId);
+            return _friendshipService.DeleteInvitation(invitationId);
         }
 
         [HttpDelete]
