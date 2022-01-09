@@ -22,10 +22,13 @@ namespace Core
             services.AddScoped<IBaseRepository<Marker>, BaseRepository<Marker>>();
 
             services.AddScoped<ITestRepository, TestRepository>();
-            services.AddScoped<IMarkerRepository, MarkerRepository>();
+            services.AddScoped<IMarkerRepository, MarkerRepository>();            
 
             services.AddScoped<ICrudTestService, CrudTestService>();
             services.AddScoped<IMarkerCrudService, MarkerCrudService>();
+
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();
