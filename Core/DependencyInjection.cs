@@ -27,7 +27,8 @@ namespace Core
             services.AddScoped<IMarkerRepository, MarkerRepository>();
             services.AddScoped<IMarkerCrudService, MarkerCrudService>();
 
-            services.AddScoped<IFriendService, FriendService>();
+            services.AddScoped<IFriendshipRepository, FriendshipRepository>();
+            services.AddScoped<IFriendshipService, FriendshipService>();
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();

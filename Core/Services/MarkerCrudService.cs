@@ -1,10 +1,7 @@
 ﻿using Core.Interfaces;
-using Core.Interfaces.Authentication;
 using Core.Requests;
 using Core.Response;
-using Microsoft.AspNetCore.Identity;
 using Storage.Models;
-using Storage.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +12,10 @@ namespace Core.Services
     public class MarkerCrudService : IMarkerCrudService
     {
         readonly IMarkerRepository _markerRepository;
-        readonly ILoggedUserProvider _loggedUserProvider;
 
-        public MarkerCrudService(IMarkerRepository markerRepository, ILoggedUserProvider loggedUserProvider)
+        public MarkerCrudService(IMarkerRepository markerRepository)
         {
             _markerRepository = markerRepository;
-            _loggedUserProvider = loggedUserProvider;
         }
 
         public async Task<ServiceResponse> GetMarkers()

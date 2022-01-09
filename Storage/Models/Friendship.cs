@@ -17,6 +17,6 @@ namespace Storage.Models
 
         public bool Notification { get; set; }
 
-        public bool Is { get; set; }
+        public bool IsAccepted { get; set; }
     }
 }

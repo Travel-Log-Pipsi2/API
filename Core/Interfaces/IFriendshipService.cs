@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IFriendService
+    public interface IFriendshipService
     {
-        public Task<ServiceResponse> GetFriendsList();
-        public Task<ServiceResponse> GetInvitesList();
+        public Task<ServiceResponse> GetFriends();
+        public Task<ServiceResponse> GetInvites();
         public Task<ServiceResponse> SendRequest(Guid toId);
         public Task<ServiceResponse> AcceptFriend(int requestId);
         public Task<ServiceResponse> DeleteRequest(int requestId);
         public Task<ServiceResponse> DeleteFriend(Guid friendId);
+        public Task<ServiceResponse> ReadRequest(int requestId);
     }
 }
