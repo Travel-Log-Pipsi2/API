@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MarkerController : Controller
+    public class MarkerController : ControllerBase
     {
         private readonly IMarkerCrudService _service;
 

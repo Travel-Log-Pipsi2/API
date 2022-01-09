@@ -1,13 +1,12 @@
-﻿using Core.Response;
-using Microsoft.AspNetCore.Mvc;
+﻿using Core.Requests;
+using Core.Response;
 using System.Threading.Tasks;
 
 namespace Core.Interfaces.Auth
 {
     public interface IExternalLoginService
     {
-        public ChallengeResult Request(string provider);
 
-        public Task<ServiceResponse> Login();
+        public Task<ServiceResponse> FacebookLogin(FacebookAuthRequest request);
     }
 }
