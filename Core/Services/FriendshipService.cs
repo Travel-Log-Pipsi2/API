@@ -1,40 +1,78 @@
 ﻿using Core.Interfaces;
+using Core.Interfaces.Authentication;
 using Core.Response;
+using Core.DTOs;
 using Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Storage.Models.Identity;
 
 namespace Core.Services
 {
     public class FriendshipService : IFriendshipService
     {
         readonly IFriendshipRepository _friendshipRepository;
+        readonly IUserRepository _userRepository;
+        readonly ILoggedUserProvider _loggedUserProvider;
 
-        public FriendshipService(IFriendshipRepository friendRepository)
+        public FriendshipService(IFriendshipRepository friendshipRepository, IUserRepository userRepository, ILoggedUserProvider loggedUserProvider)
         {
-            _friendshipRepository = friendRepository;
+            _friendshipRepository = friendshipRepository;
+            _userRepository = userRepository;
+            _loggedUserProvider = loggedUserProvider;
         }
 
         public async Task<ServiceResponse> GetFriends()
         {
-            var friends = await _friendshipRepository.GetFriendships(true);
+            var friendships = await _friendshipRepository.GetFriendships(true);
+            var currentId = _loggedUserProvider.GetUserId();
+            List<Guid> ids = new();
+            foreach (Friendship friendship in friendships)
+            {
+                ids.Add(friendship.ToFriend == currentId ? friendship.FromFriend : friendship.ToFriend);
+            }
+            List<FriendListElementDto> friends = new();
+            var users = await _userRepository.GetUsers(ids);
+            foreach (User user in users)
+            {
+                friends.Add( new FriendListElementDto() { Id = user.Id, Username = user.UserName });
+            }
 
-            return ServiceResponse<IEnumerable<Friendship>>.Success(friends, "Friendships retrieved");
+            return ServiceResponse<IEnumerable<FriendListElementDto>>.Success(friends, "Friends retrieved");
         }
 
-        public async Task<ServiceResponse> GetInvites()
+        public async Task<ServiceResponse> GetInvitations()
         {
-            var friends = await _friendshipRepository.GetFriendships(false);
+            var friendships = await _friendshipRepository.GetFriendships(false);
+            var currentId = _loggedUserProvider.GetUserId();
+            List<Guid> ids = new();
+            List<FriendInvitationDto> invitations = new();
+            foreach (Friendship friendship in friendships)
+            {
+                if (friendship.ToFriend == currentId)
+                {
+                    ids.Add(friendship.FromFriend);
+                    invitations.Add(new FriendInvitationDto() { Id = friendship.Id, UserId = friendship.FromFriend});
+                }     
+            }
 
-            return ServiceResponse<IEnumerable<Friendship>>.Success(friends, "Friendships invites retrieved");
+            var users = await _userRepository.GetUsers(ids);
+            foreach (User user in users)
+            {
+                invitations.Find(i => i.UserId == user.Id).Username = user.UserName;
+            }
+
+            return ServiceResponse<IEnumerable<FriendInvitationDto>>.Success(invitations, "Friendships invites retrieved");
         }
 
-        public async Task<ServiceResponse> SendRequest(Guid toId)
+        public async Task<ServiceResponse> SendInvitation(Guid toId)
         {
-            await _friendshipRepository.CreateFriendship(toId);
+            var create = await _friendshipRepository.CreateFriendship(toId);
+            if (create)
+                return ServiceResponse.Success("Send friend invitation");
 
-            return ServiceResponse.Success("Send friend initation");
+            return ServiceResponse.Error("Invitation not send");
         }
 
         public async Task<ServiceResponse> AcceptFriend(int requestId)

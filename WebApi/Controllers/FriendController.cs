@@ -31,14 +31,14 @@ namespace WebApi.Controllers
         [Route("Invites")]
         public Task<ServiceResponse> GetInvites()
         {
-            return _friendshipService.GetInvites();
+            return _friendshipService.GetInvitations();
         }
 
         [HttpPost]
         [Route("Invite/{toId}")]
         public Task<ServiceResponse> SendInvite(Guid toId)
         {
-            return _friendshipService.SendRequest(toId);
+            return _friendshipService.SendInvitation(toId);
         }
 
         [HttpPut]

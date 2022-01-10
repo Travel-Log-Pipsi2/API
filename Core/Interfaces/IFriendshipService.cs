@@ -7,8 +7,8 @@ namespace Core.Interfaces
     public interface IFriendshipService
     {
         public Task<ServiceResponse> GetFriends();
-        public Task<ServiceResponse> GetInvites();
-        public Task<ServiceResponse> SendRequest(Guid toId);
+        public Task<ServiceResponse> GetInvitations();
+        public Task<ServiceResponse> SendInvitation(Guid toId);
         public Task<ServiceResponse> AcceptFriend(int requestId);
         public Task<ServiceResponse> DeleteInvitation(int requestId);
         public Task<ServiceResponse> DeleteFriend(Guid friendId);

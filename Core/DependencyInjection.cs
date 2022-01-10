@@ -30,6 +30,8 @@ namespace Core
             services.AddScoped<IFriendshipRepository, FriendshipRepository>();
             services.AddScoped<IFriendshipService, FriendshipService>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IRegisterService, RegisterService>();
