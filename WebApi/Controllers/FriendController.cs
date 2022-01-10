@@ -50,7 +50,7 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("Delete-invitation/{invitationId}")]
-        public Task<ServiceResponse> DeleteFriendRequest(int invitationId)
+        public Task<ServiceResponse> DeleteFriendInvitation(int invitationId)
         {
             return _friendshipService.DeleteInvitation(invitationId);
         }
