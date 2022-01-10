@@ -22,6 +22,7 @@ namespace Core
             services.AddScoped<IBaseRepository<Marker>, BaseRepository<Marker>>();
 
             services.AddScoped<ITestRepository, TestRepository>();
+
             services.AddScoped<ICrudTestService, CrudTestService>();
 
             services.AddScoped<IMarkerRepository, MarkerRepository>();
@@ -31,6 +32,9 @@ namespace Core
             services.AddScoped<IFriendshipService, FriendshipService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ILoginService, LoginService>();
