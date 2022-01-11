@@ -1,16 +1,12 @@
 ﻿using Core.Interfaces;
 using Core.Interfaces.Authentication;
 using Core.Requests;
-using Core.Response;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Storage.DataAccessLayer;
 using Storage.Models;
-using Storage.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Repositories

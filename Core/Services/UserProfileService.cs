@@ -11,6 +11,7 @@ namespace Core.Services
     {
         readonly IUserProfileRepository _userProfileRepository;
         readonly ILoggedUserProvider _loggedUserProvider;
+        readonly IFriendshipService _friendshipService;
 
         public UserProfileService(IUserProfileRepository userProfileRepository, ILoggedUserProvider loggedUserProvider)
         {
@@ -20,14 +21,21 @@ namespace Core.Services
 
         public async Task<ServiceResponse> GetInfo()
         {
+            var currentId = _loggedUserProvider.GetUserId();
             UserDTO userInfo = await _userProfileRepository.GetInfo();
             return ServiceResponse<UserDTO>.Success(userInfo);
         }
 
         public async Task<ServiceResponse> GetInfo(Guid userId)
         {
-            UserDTO userInfo = await _userProfileRepository.GetInfo(userId);
-            return ServiceResponse<UserDTO>.Success(userInfo);
+            var currentId = _loggedUserProvider.GetUserId();
+            var isFriend = await _friendshipService.IsFriend(currentId);
+            if (isFriend)
+            {
+                UserDTO userInfo = await _userProfileRepository.GetInfo(userId);
+                return ServiceResponse<UserDTO>.Success(userInfo);
+            }
+            return ServiceResponse.Error($"User {userId} is not your friend");
         }
 
         public async Task<ServiceResponse> GetStats()
