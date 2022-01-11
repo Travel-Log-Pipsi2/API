@@ -102,12 +102,22 @@ namespace Core.Services
 
         public async Task<ServiceResponse> ReadRequest(int requestId)
         {
-            var request = await _friendshipRepository.GetFriendship(requestId);
-            request.Notification = false;
-            await _friendshipRepository.SaveFriendship(request);
+            var friendship = await _friendshipRepository.GetFriendship(requestId);
+            friendship.Notification = false;
+            await _friendshipRepository.SaveFriendship(friendship);
 
             return ServiceResponse.Success("Notificated");
+        }
 
+        public async Task<bool> IsFriend(Guid friendId)
+        {
+            var friendships = await _friendshipRepository.GetFriendships(true);
+            foreach (Friendship friendship in friendships)
+            {
+                if (friendship.ToFriend == friendId || friendship.FromFriend == friendId)
+                    return true;
+            }
+            return false;
         }
     }
 }

@@ -13,5 +13,6 @@ namespace Core.Interfaces
         public Task<ServiceResponse> DeleteInvitation(int requestId);
         public Task<ServiceResponse> DeleteFriend(Guid friendId);
         public Task<ServiceResponse> ReadRequest(int requestId);
+        public Task<bool> IsFriend(Guid friendId);
     }
 }
