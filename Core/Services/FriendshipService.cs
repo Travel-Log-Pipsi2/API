@@ -53,7 +53,7 @@ namespace Core.Services
                 if (friendship.ToFriend == currentId)
                 {
                     ids.Add(friendship.FromFriend);
-                    invitations.Add(new FriendInvitationDto() { Id = friendship.Id, UserId = friendship.FromFriend});
+                    invitations.Add(new FriendInvitationDto() { Id = friendship.Id, UserId = friendship.FromFriend, Notification = friendship.Notification});
                 }     
             }
 
