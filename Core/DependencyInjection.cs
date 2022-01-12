@@ -45,6 +45,8 @@ namespace Core
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IExternalLoginService, ExternalLoginService>();
 
+            services.AddScoped<IFetchDataService, FetchDataService>();
+
             return services;
         }
     }
