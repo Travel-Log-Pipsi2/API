@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/travellogdbserver/databases/TravelLogDB",
+      "type": "mssql.azure",
+      "connectionId": "ApiConntectionString",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
