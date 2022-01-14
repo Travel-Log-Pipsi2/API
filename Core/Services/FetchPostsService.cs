@@ -28,7 +28,7 @@ namespace Core.Services
         public async Task<ServiceResponse> Connect(string accessToken, string userProviderId)
         {
             var userId = _loggedUserProvider.GetUserId();
-            var connection = await _connectionRepository.GetConnection(userId);
+            var connection = await _connectionRepository.GetConnection();
             if (connection != null)
             {
                 connection.GenerationTime = DateTime.Now;
@@ -52,12 +52,11 @@ namespace Core.Services
 
         public async Task<ServiceResponse> Facebook()
         {
-            var userId = _loggedUserProvider.GetUserId();
-            var connectionInfo = await _connectionRepository.GetConnection(userId);
+            var connectionInfo = await _connectionRepository.GetConnection();
             if (connectionInfo == null || (DateTime.Now - connectionInfo.GenerationTime).Hours > 2)
                 return ServiceResponse.Error("Account is not connected with facebook. Please refresh connection");
 
-            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time&since={ connectionInfo.LastConnection.Ticks }&access_token={ connectionInfo.AccessToken }";
+            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time&since={ connectionInfo.LastConnectionTime.Ticks }&access_token={ connectionInfo.AccessToken }";
 
             while (true)
             {
@@ -87,7 +86,7 @@ namespace Core.Services
 
                 link = dataList.Paging.Next.ToString();
             }
-            connectionInfo.LastConnection = DateTime.Now;
+            connectionInfo.LastConnectionTime = DateTime.Now;
             await _connectionRepository.SaveConnection(connectionInfo);
 
             return ServiceResponse.Success("Locations from facebook's posts added");

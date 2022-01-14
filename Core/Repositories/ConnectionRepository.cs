@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces;
+using Core.Interfaces.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Storage.DataAccessLayer;
 using Storage.Models;
@@ -10,10 +11,16 @@ namespace Core.Repositories
 {
     public class ConnectionRepository : BaseRepository<Connection>, IConnectionRepository
     {
-        public ConnectionRepository(ApiDbContext context) : base(context) { }
+        readonly ILoggedUserProvider _loggedUserProvider;
 
-        public async Task<Connection> GetConnection(Guid userId)
+        public ConnectionRepository(ApiDbContext context, ILoggedUserProvider loggedUserProvider) : base(context)
         {
+            _loggedUserProvider = loggedUserProvider;
+        }
+
+        public async Task<Connection> GetConnection()
+        {
+            var userId = _loggedUserProvider.GetUserId();
             var connectionInfo = await _context.Connections.Where(c => c.UserId == userId).FirstOrDefaultAsync();
 
             return connectionInfo;

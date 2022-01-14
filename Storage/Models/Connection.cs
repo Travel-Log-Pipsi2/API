@@ -19,6 +19,6 @@ namespace Storage.Models
         [Required]
         public DateTime GenerationTime { get; set; }
         
-        public DateTime LastConnection { get; set; }
+        public DateTime LastConnectionTime { get; set; }
     }
 }
