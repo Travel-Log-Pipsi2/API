@@ -56,7 +56,7 @@ namespace Core.Services
             if (connectionInfo == null || (DateTime.Now - connectionInfo.GenerationTime).Hours > 2)
                 return ServiceResponse.Error("Account is not connected with facebook. Please refresh connection");
 
-            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time&since={ connectionInfo.LastConnectionTime.Ticks }&access_token={ connectionInfo.AccessToken }";
+            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time&since={ (int)connectionInfo.LastConnectionTime.Subtract(DateTime.UnixEpoch).TotalSeconds }&access_token={ connectionInfo.AccessToken }";
 
             while (true)
             {
@@ -86,7 +86,7 @@ namespace Core.Services
 
                 link = dataList.Paging.Next.ToString();
             }
-            connectionInfo.LastConnectionTime = DateTime.Now;
+            connectionInfo.LastConnectionTime = DateTime.UtcNow;
             await _connectionRepository.SaveConnection(connectionInfo);
 
             return ServiceResponse.Success("Locations from facebook's posts added");
