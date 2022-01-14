@@ -11,9 +11,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class FetchPostsController : ControllerBase
     {
-        readonly IFetchDataService _fetchService;
+        readonly IFetchPostsService _fetchService;
 
-        public FetchPostsController(IFetchDataService fetchService)
+        public FetchPostsController(IFetchPostsService fetchService)
         {
             _fetchService = fetchService;
         }
@@ -27,7 +27,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("Facebook/Connect")]
-        public async Task<ServiceResponse> FacebookConnect([FromBody] string accessToken, string userProviderId)
+        public async Task<ServiceResponse> FacebookConnect(string accessToken, string userProviderId)
         {
             return await _fetchService.Connect(accessToken, userProviderId);
         }

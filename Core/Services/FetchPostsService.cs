@@ -10,21 +10,19 @@ using System;
 
 namespace Core.Services
 {
-    public class FetchDataService : IFetchDataService
+    public class FetchPostsService : IFetchPostsService
     {
         readonly HttpClient _client;
         readonly IMarkerCrudService _markerSerice;
         readonly IConnectionRepository _connectionRepository;
         readonly ILoggedUserProvider _loggedUserProvider;
-        readonly IConfiguration _config;
 
-        public FetchDataService(HttpClient client, IMarkerCrudService markerSerice, IConnectionRepository connectionRepository, ILoggedUserProvider loggedUserProvider, IConfiguration config)
+        public FetchPostsService(HttpClient client, IMarkerCrudService markerSerice, IConnectionRepository connectionRepository, ILoggedUserProvider loggedUserProvider)
         {
             _client = client;
             _markerSerice = markerSerice;
             _connectionRepository = connectionRepository;
             _loggedUserProvider = loggedUserProvider;
-            _config = config;
         }
 
         public async Task<ServiceResponse> Connect(string accessToken, string userProviderId)
@@ -34,21 +32,24 @@ namespace Core.Services
                 AccessToken = accessToken, 
                 ProvierId = userProviderId,
                 UserId = userId,
-                lastConnection = DateTime.Now
+                GenerationTime = DateTime.Now
             });
 
             if (result)
                 return ServiceResponse.Success("Account connected");
-            return ServiceResponse.Error("Account not connected");
+            return ServiceResponse.Error("Error occured while connecting account");
         }
 
         public async Task<ServiceResponse> Facebook()
         {
             var userId = _loggedUserProvider.GetUserId();
             var connectionInfo = await _connectionRepository.GetConnection(userId);
-            if (connectionInfo == null)
-                return ServiceResponse.Error("Account is not connected with facebook");
-            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time&since={ connectionInfo.lastConnection.Ticks }&access_token={ connectionInfo.AccessToken }";
+            if (connectionInfo == null || (DateTime.Now - connectionInfo.GenerationTime).Hours > 2)
+                return ServiceResponse.Error("Account is not connected with facebook. Please refresh connection");
+
+            string link = "https://graph.facebook.com/" + $"{ connectionInfo.ProvierId }/posts?fields=place,created_time" +
+                connectionInfo.LastConnection != null ? $"&since={ connectionInfo.LastConnection.Ticks }" : ""+
+                $"&access_token={ connectionInfo.AccessToken }";
 
             while (true)
             {
@@ -78,6 +79,8 @@ namespace Core.Services
 
                 link = dataList.Paging.Next.ToString();
             }
+            connectionInfo.GenerationTime = DateTime.Now;
+            await _connectionRepository.SaveConnection(connectionInfo);
 
             return ServiceResponse.Success("Locations from facebook's posts added");
         }
