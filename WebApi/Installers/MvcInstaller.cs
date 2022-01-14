@@ -13,6 +13,7 @@ namespace WebApi.Installers
             services.AddSingleton<ILoggedUserProvider, LoggedUserProvider>();
             services.AddCore();
             services.AddControllers();
+            services.AddHttpClient();
         }
     }
 }

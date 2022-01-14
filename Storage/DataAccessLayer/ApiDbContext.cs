@@ -17,6 +17,7 @@ namespace Storage.DataAccessLayer
             _loggedUserProvider = loggedUserProvider;
         }
 
+        public DbSet<Connection> Connections { get; set; }
         public DbSet<Test> TestModels { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Marker> MarkerModel { get; set; }
