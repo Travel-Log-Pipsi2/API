@@ -24,5 +24,12 @@ namespace WebApi.Controllers
         {
             return await _fetchService.Facebook();
         }
+
+        [HttpGet]
+        [Route("Facebook/Connect")]
+        public async Task<ServiceResponse> FacebookConnect([FromBody] string accessToken, string userProviderId)
+        {
+            return await _fetchService.Connect(accessToken, userProviderId);
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace Core.Interfaces
     public interface IFetchDataService
     {
         public Task<ServiceResponse> Facebook();
+        public Task<ServiceResponse> Connect(string accessToken, string userProviderId);
     }
 }
