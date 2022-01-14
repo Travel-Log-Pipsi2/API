@@ -46,6 +46,7 @@ namespace Core
             services.AddScoped<IExternalLoginService, ExternalLoginService>();
 
             services.AddScoped<IFetchDataService, FetchDataService>();
+            services.AddScoped<IConnectionRepository, ConnectionRepository>();
 
             return services;
         }
