@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4A2384AA-9772-4A9B-BC0A-C0C7D4D98919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{CC9FE9C3-F162-48FE-A91D-0C97869ED338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage", "Storage\Storage.csproj", "{CC9FE9C3-F162-48FE-A91D-0C97869ED338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{FED4F074-515E-4DC6-9F18-805D2F060476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{FED4F074-515E-4DC6-9F18-805D2F060476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiIntegrationTests", "..\ApiIntegrationTests\ApiIntegrationTests.csproj", "{035D8E10-53F5-4428-ACFA-0231B9C2770C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
