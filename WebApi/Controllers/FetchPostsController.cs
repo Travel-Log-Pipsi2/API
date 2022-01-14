@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FetchPostsController : ControllerBase
     {
-        readonly IFetchDataService _fetchService;
 
-        public FetchPostsController(IFetchDataService fetchService)
+        readonly IFetchPostsService _fetchService;
+
+        public FetchPostsController(IFetchPostsService fetchService)
         {
             _fetchService = fetchService;
         }
@@ -23,6 +25,13 @@ namespace WebApi.Controllers
         public async Task<ServiceResponse> FromFacebook()
         {
             return await _fetchService.Facebook();
+        }
+
+        [HttpGet]
+        [Route("Facebook/Connect")]
+        public async Task<ServiceResponse> FacebookConnect(string accessToken, string userProviderId)
+        {
+            return await _fetchService.Connect(accessToken, userProviderId);
         }
     }
 }

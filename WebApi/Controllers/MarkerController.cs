@@ -59,31 +59,31 @@ namespace WebAPI.Controllers
 
 
         [HttpPut()]
-        [Route("UpdateMarker")]
-        public Task<ServiceResponse> Update(int MarkerID, [FromBody] MarkerRequest model)
+        [Route("UpdateMarker/{markerId?}")]
+        public Task<ServiceResponse> Update(int markerId, [FromBody] MarkerRequest model)
         {
-            return _service.UpdateMarker(MarkerID, model);
+            return _service.UpdateMarker(markerId, model);
         }
 
         [HttpPut()]
-        [Route("UpdateTravel")]
-        public Task<ServiceResponse> UpdateTravel(int TravelID, [FromBody] TravelRequest model)
+        [Route("UpdateTravel/{travelId?}")]
+        public Task<ServiceResponse> UpdateTravel(int travelId, [FromBody] TravelRequest model)
         {
-            return _service.UpdateTravel(TravelID, model);
+            return _service.UpdateTravel(travelId, model);
         }
 
         [HttpDelete()]
-        [Route("DeleteMarker")]
-        public Task<ServiceResponse> Delete(int MarkerID)
+        [Route("DeleteMarker/{markerId?}")]
+        public Task<ServiceResponse> Delete(int markerId)
         {
-            return _service.DeleteMarker(MarkerID);
+            return _service.DeleteMarker(markerId);
         }
 
         [HttpDelete()]
-        [Route("DeleteTravel")]
-        public Task<ServiceResponse> DeleteTravel(int TravelID)
+        [Route("DeleteTravel/{travelId?}")]
+        public Task<ServiceResponse> DeleteTravel(int travelId)
         {
-            return _service.DeleteTravel(TravelID);
+            return _service.DeleteTravel(travelId);
         }
     }
 
