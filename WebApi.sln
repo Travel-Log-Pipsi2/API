@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage", "Storage\Storage.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{FED4F074-515E-4DC6-9F18-805D2F060476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiIntegrationTests", "..\ApiIntegrationTests\ApiIntegrationTests.csproj", "{035D8E10-53F5-4428-ACFA-0231B9C2770C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiIntegrationTests", "ApiIntegrationTests\ApiIntegrationTests.csproj", "{0760FFB3-72C2-4B39-AC79-AD199504A785}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FED4F074-515E-4DC6-9F18-805D2F060476}.Release|Any CPU.Build.0 = Release|Any CPU
-		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{035D8E10-53F5-4428-ACFA-0231B9C2770C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0760FFB3-72C2-4B39-AC79-AD199504A785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0760FFB3-72C2-4B39-AC79-AD199504A785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0760FFB3-72C2-4B39-AC79-AD199504A785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0760FFB3-72C2-4B39-AC79-AD199504A785}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
