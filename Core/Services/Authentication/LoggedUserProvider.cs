@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Core.Interfaces.Authentication;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Security.Claims;
-using Core.Interfaces.Authentication;
 
 namespace Core.Services.Authentication
 {

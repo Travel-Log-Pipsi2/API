@@ -15,7 +15,7 @@ namespace Core.Services.Auth
     class ExternalLoginService : AuthServicesProvider, IExternalLoginService
     {
         private readonly IAdditionalAuthMetods _additionalAuthMetods;
-        public ExternalLoginService(UserManager<User> _userManager, SignInManager<User> _signInManager, IConfiguration _config, IJwtGenerator _jwtGenerator, IAdditionalAuthMetods additionalAuthMethods) 
+        public ExternalLoginService(UserManager<User> _userManager, SignInManager<User> _signInManager, IConfiguration _config, IJwtGenerator _jwtGenerator, IAdditionalAuthMetods additionalAuthMethods)
             : base(_userManager, _signInManager, config: _config, jwtGenerator: _jwtGenerator)
         {
             _additionalAuthMetods = additionalAuthMethods;
@@ -23,7 +23,7 @@ namespace Core.Services.Auth
 
         public async Task<ServiceResponse> FacebookLogin(FacebookAuthRequest request)
         {
-            
+
             ExternalLoginInfo info = new(new ClaimsPrincipal(), request.GraphDomain, request.UserId, request.Name);
             if (info == null)
             {
@@ -39,7 +39,7 @@ namespace Core.Services.Auth
 
             User user = CreateExternalUser(request.Name);
             IdentityResult identResult = await _userManager.CreateAsync(user);
-           
+
             if (identResult.Succeeded)
             {
                 identResult = await _userManager.AddLoginAsync(user, info);
@@ -60,7 +60,7 @@ namespace Core.Services.Auth
                 UserName = username.Replace(" ", "_"),
                 EmailConfirmed = true
             };
-            
+
             return user;
         }
     }

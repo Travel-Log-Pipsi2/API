@@ -33,7 +33,7 @@ namespace WebApi.Installers
                 };
                 OpenApiSecurityRequirement securityRequirements = new()
                 {
-                    {securityScheme, new string[] { }},
+                    { securityScheme, new string[] { } },
                 };
                 c.AddSecurityRequirement(securityRequirements);
             });

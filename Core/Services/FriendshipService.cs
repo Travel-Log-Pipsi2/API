@@ -1,12 +1,12 @@
-﻿using Core.Interfaces;
+﻿using Core.DTOs;
+using Core.Interfaces;
 using Core.Interfaces.Authentication;
 using Core.Response;
-using Core.DTOs;
 using Storage.Models;
+using Storage.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Storage.Models.Identity;
 
 namespace Core.Services
 {
@@ -36,7 +36,7 @@ namespace Core.Services
             var users = await _userRepository.GetUsers(ids);
             foreach (User user in users)
             {
-                friends.Add( new FriendListElementDto() { Id = user.Id, Username = user.UserName });
+                friends.Add(new FriendListElementDto() { Id = user.Id, Username = user.UserName });
             }
 
             return ServiceResponse<IEnumerable<FriendListElementDto>>.Success(friends, "Friends retrieved");
@@ -53,8 +53,8 @@ namespace Core.Services
                 if (friendship.ToFriend == currentId)
                 {
                     ids.Add(friendship.FromFriend);
-                    invitations.Add(new FriendInvitationDto() { Id = friendship.Id, UserId = friendship.FromFriend, Notification = friendship.Notification});
-                }     
+                    invitations.Add(new FriendInvitationDto() { Id = friendship.Id, UserId = friendship.FromFriend, Notification = friendship.Notification });
+                }
             }
 
             var users = await _userRepository.GetUsers(ids);

@@ -1,12 +1,11 @@
 ﻿using Core.Interfaces;
-using Core.Response;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Core.JSON;
-using Microsoft.Extensions.Configuration;
 using Core.Interfaces.Authentication;
+using Core.JSON;
+using Core.Response;
 using Storage.Models;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Core.Services
 {
@@ -37,9 +36,10 @@ namespace Core.Services
 
                 return ServiceResponse.Success("Account connection refreshed");
             }
-               
-            var result = await _connectionRepository.SaveConnection( new Connection() { 
-                AccessToken = accessToken, 
+
+            var result = await _connectionRepository.SaveConnection(new Connection()
+            {
+                AccessToken = accessToken,
                 ProvierId = userProviderId,
                 UserId = userId,
                 GenerationTime = DateTime.Now

@@ -1,5 +1,4 @@
 ﻿using Core.Interfaces;
-using Core.Requests;
 using Core.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

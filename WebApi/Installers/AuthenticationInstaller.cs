@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Storage.DataAccessLayer;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System;
 using Storage.Models.Identity;
+using System;
+using System.Text;
 
 namespace WebApi.Installers
 {

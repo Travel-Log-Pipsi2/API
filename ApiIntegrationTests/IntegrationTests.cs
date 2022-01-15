@@ -1,25 +1,16 @@
+using Core.Requests;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Storage.DataAccessLayer;
-using System;
+using Storage.Models.Identity;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApi;
-using Xunit;
-using System.Net.Http.Json;
-using WebApi.Controllers;
-using Core.Requests;
-using Core.Response;
-using Microsoft.AspNetCore.Identity;
-using Storage.Models.Identity;
-using System.Linq;
-using Core.Interfaces.Authentication;
-using Core.Services.Authentication;
-using System.Text.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ApiIntegrationTests
 {
@@ -30,9 +21,9 @@ namespace ApiIntegrationTests
         protected User user;
 
         protected IntegrationTests()
-        {            
+        {
             var appFactory = new WebApplicationFactory<Startup>()
-                .WithWebHostBuilder(builder => builder.ConfigureServices(services => 
+                .WithWebHostBuilder(builder => builder.ConfigureServices(services =>
                 {
                     services.RemoveAll(typeof(DbContextOptions<ApiDbContext>));
                     services.AddDbContext<ApiDbContext>(options => { options.UseInMemoryDatabase("TestDb"); });
@@ -42,14 +33,14 @@ namespace ApiIntegrationTests
             context = scope.ServiceProvider.GetService<ApiDbContext>();
 
             testClient = appFactory.CreateClient();
-            
+
         }
 
         protected async Task AuthenticateClientAsync()
         {
             testClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetJwtAsync());
         }
-        
+
         protected async Task<string> GetJwtAsync()
         {
             var email = "test@integration.com";
@@ -68,18 +59,18 @@ namespace ApiIntegrationTests
 
 
             HttpResponseMessage loginResponse = await testClient.PostAsJsonAsync("api/Authenticate/Login", new LoginRequest
-            {                
+            {
                 Email = "test@integration.com",
-                Password = "testPass1!",                
-            });   
-            
-            JObject json = JObject.Parse(loginResponse.Content.ReadAsStringAsync().Result);                        
+                Password = "testPass1!",
+            });
+
+            JObject json = JObject.Parse(loginResponse.Content.ReadAsStringAsync().Result);
             return json["content"].ToString();
         }
 
         protected void ClearInMemoryDatabase()
         {
-            context.Database.EnsureDeleted();            
+            context.Database.EnsureDeleted();
         }
     }
 }

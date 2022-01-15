@@ -1,12 +1,12 @@
 ﻿using Core.Interfaces;
 using Core.Interfaces.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Storage.DataAccessLayer;
 using Storage.Models;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Repositories
 {
@@ -59,7 +59,8 @@ namespace Core.Repositories
             if (friendship != null)
                 return false;
 
-            Friendship newFriendship = new() {
+            Friendship newFriendship = new()
+            {
                 FromFriend = loggedId,
                 ToFriend = toId,
                 IsAccepted = false,

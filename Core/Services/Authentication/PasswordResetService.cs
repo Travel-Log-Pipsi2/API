@@ -1,13 +1,13 @@
-﻿using Core.Interfaces.Authentication;
-using Core.Common;
+﻿using Core.Common;
+using Core.Interfaces.Authentication;
 using Core.Interfaces.Email;
 using Core.Requests;
 using Core.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Storage.Models.Identity;
 using System.Net;
 using System.Threading.Tasks;
-using Storage.Models.Identity;
 
 namespace Core.Services.Authentication
 {

@@ -114,7 +114,7 @@ namespace Core.Services
             }
 
             return ServiceResponse.Success("Success, Marker deleted.");
-           
+
         }
 
         public async Task<ServiceResponse> DeleteTravel(int TravelID)
@@ -145,7 +145,7 @@ namespace Core.Services
                 return ServiceResponse.Error("Travel does not exist");
             }
 
-            
+
 
         }
     }

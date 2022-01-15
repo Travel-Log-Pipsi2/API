@@ -15,7 +15,8 @@ namespace Core.Repositories
     {
         readonly ILoggedUserProvider _loggedUserProvider;
 
-        public MarkerRepository(ApiDbContext context, ILoggedUserProvider loggedUserProvider) : base(context) {
+        public MarkerRepository(ApiDbContext context, ILoggedUserProvider loggedUserProvider) : base(context)
+        {
             _loggedUserProvider = loggedUserProvider;
         }
         public async Task<IEnumerable<Marker>> GetMarkers()
@@ -50,7 +51,7 @@ namespace Core.Repositories
             var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == travel.MarkerId);
 
             if (marker.UserID != _loggedUserProvider.GetUserId())
-                throw new UnauthorizedAccessException();            
+                throw new UnauthorizedAccessException();
 
             return marker;
         }
@@ -68,7 +69,7 @@ namespace Core.Repositories
             markerRequest.Country = model.Country;
             markerRequest.Longitude = model.Longitude;
             markerRequest.Latitude = model.Latitude;
-                       
+
             Guid userId = _loggedUserProvider.GetUserId();
             markerRequest.UserID = userId;
             await Create(markerRequest);
@@ -116,7 +117,7 @@ namespace Core.Repositories
                 var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == existingTravel.MarkerId);
                 if (marker.UserID != _loggedUserProvider.GetUserId())
                     throw new UnauthorizedAccessException();
-                
+
                 existingTravel.Description = model.Description;
                 existingTravel.StartDate = model.StartDate;
                 existingTravel.EndDate = model.EndDate;
@@ -148,14 +149,14 @@ namespace Core.Repositories
 
         public async Task DeleteTravel(int TravelID)
         {
-            var travelToDelete = await _context.TravelModel.FirstOrDefaultAsync(t => t.Id == TravelID);            
+            var travelToDelete = await _context.TravelModel.FirstOrDefaultAsync(t => t.Id == TravelID);
 
             if (travelToDelete != null)
             {
                 var marker = await _context.MarkerModel.FirstOrDefaultAsync(m => m.Id == travelToDelete.MarkerId);
                 if (marker.UserID != _loggedUserProvider.GetUserId())
                     throw new UnauthorizedAccessException();
-                
+
                 _context.TravelModel.Remove(travelToDelete);
                 await _context.SaveChangesAsync();
 

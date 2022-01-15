@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
             return _service.GetTravelsOfMarker(markerId);
         }
 
-        
+
         [HttpGet]
         [Route("GetMarkers/{userId?}")]
         public Task<ServiceResponse> GetFiltered(Guid userId)
@@ -54,7 +54,7 @@ namespace WebAPI.Controllers
         [Route("CreateTravel")]
         public Task<ServiceResponse> CreateTravel(MarkerTravelRequest model)
         {
-            return _service.CreateTravel(model);           
+            return _service.CreateTravel(model);
         }
 
 

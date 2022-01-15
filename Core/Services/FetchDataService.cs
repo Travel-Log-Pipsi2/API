@@ -1,9 +1,9 @@
 ﻿using Core.Interfaces;
+using Core.JSON;
 using Core.Response;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.JSON;
-using Microsoft.Extensions.Configuration;
 
 namespace Core.Services
 {

@@ -18,7 +18,7 @@ namespace Storage.Models
         public string AccessToken { get; set; }
         [Required]
         public DateTime GenerationTime { get; set; }
-        
+
         public DateTime LastConnectionTime { get; set; }
     }
 }

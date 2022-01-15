@@ -17,25 +17,26 @@ namespace Core.Repositories
         protected readonly ApiDbContext _context;
         readonly IMarkerRepository _markerRepository;
 
-        readonly UserManager<User> _userManager;        
+        readonly UserManager<User> _userManager;
         readonly ILoggedUserProvider _loggedUserProvider;
 
-        public UserProfileRepository(ApiDbContext context, IMarkerRepository markerRepository, UserManager<User> userManager, ILoggedUserProvider loggedUserProvider) {
+        public UserProfileRepository(ApiDbContext context, IMarkerRepository markerRepository, UserManager<User> userManager, ILoggedUserProvider loggedUserProvider)
+        {
             _context = context;
             _markerRepository = markerRepository;
 
-            _userManager = userManager;            
-            _loggedUserProvider = loggedUserProvider;            
+            _userManager = userManager;
+            _loggedUserProvider = loggedUserProvider;
         }
         public async Task<UserDTO> GetInfo()
-        {            
+        {
             var userInfo = await GetInfo(_loggedUserProvider.GetUserId());
             return userInfo;
         }
 
         public async Task<UserDTO> GetInfo(Guid userId)
         {
-            UserDTO userInfo = new();            
+            UserDTO userInfo = new();
 
             User user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
@@ -77,7 +78,7 @@ namespace Core.Repositories
 
             IEnumerable<Marker> markersEnumerable = await _markerRepository.GetMarkersOfUser(userId);
             List<Marker> markers = markersEnumerable.ToList();
-            
+
             stats.MarkerCount = markers.Count; // Ilość miejsc            
 
             foreach (Marker marker in markers)
@@ -99,14 +100,14 @@ namespace Core.Repositories
                     if (travel.StartDate.Year == currentYear || travel.EndDate.Year == currentYear)
                     {
                         stats.CurrentYearTravelCount++; // Ilość podróży w tym roku
-                        
+
                         if (!countriesThisYear.Contains(marker.Country))
                         {
                             countriesThisYear.Add(marker.Country);
                             stats.CurrentYearCountryCount++; // Ilość kraji w tym roku
                         }
                     }
-                }                    
+                }
             }
             stats.CountryCount = countries.Count; // Ilość odwiedzonych kraji
 

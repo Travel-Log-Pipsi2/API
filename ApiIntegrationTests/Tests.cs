@@ -1,16 +1,10 @@
 ﻿using Core.Requests;
 using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Storage.Models.Identity;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using WebApi;
 using Xunit;
 
 namespace ApiIntegrationTests
@@ -38,7 +32,7 @@ namespace ApiIntegrationTests
             await testClient.PostAsJsonAsync("api/Marker/CreateTravel", new MarkerTravelRequest
             {
                 Name = "testName",
-                Country = "testCountry1",                
+                Country = "testCountry1",
                 Latitude = 10,
                 Longitude = 5,
                 Description = "Test description",
@@ -54,7 +48,7 @@ namespace ApiIntegrationTests
             json["content"][0]["name"].ToString().Should().BeEquivalentTo("testName");
             json["content"][0]["travels"].Should().HaveCount(1);
             json["content"][0]["travels"][0]["description"].ToString().Should().BeEquivalentTo("Test description");
-            
+
             ClearInMemoryDatabase();
         }
 
@@ -127,7 +121,7 @@ namespace ApiIntegrationTests
             JObject json = JObject.Parse(response.Content.ReadAsStringAsync().Result);
             json["content"].Should().HaveCount(1);
             json["content"][0]["travels"].Should().HaveCount(1);
-            json["content"][0]["travels"][0]["description"].ToString().Should().BeEquivalentTo("After");            
+            json["content"][0]["travels"][0]["description"].ToString().Should().BeEquivalentTo("After");
 
             ClearInMemoryDatabase();
         }
@@ -161,7 +155,7 @@ namespace ApiIntegrationTests
             ClearInMemoryDatabase();
         }
 
-        
+
         [Fact]
         public async Task Travel_DeleteWithTwoTravels()
         {
@@ -202,7 +196,7 @@ namespace ApiIntegrationTests
 
             ClearInMemoryDatabase();
         }
-        
+
 
         [Fact]
         public async Task Marker_CreateDifferentMarkers()

@@ -65,7 +65,7 @@ namespace Core.Services.Authentication
 
                 if (isConfirmed || !result.Succeeded)
                     throw new();
-                
+
                 return ServiceResponse.Success("Email confirmed succesfully");
             }
             catch
