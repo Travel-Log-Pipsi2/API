@@ -114,7 +114,7 @@ namespace ApiIntegrationTests
 
             JObject createJson = JObject.Parse(createResponse.Content.ReadAsStringAsync().Result);
 
-            var r = await testClient.PutAsJsonAsync("api/Marker/UpdateTravel/" + (int)createJson["content"]["id"], new TravelRequest
+            await testClient.PutAsJsonAsync("api/Marker/UpdateTravel/" + (int)createJson["content"]["id"], new TravelRequest
             (
                 "After",
                 DateTime.Now,
