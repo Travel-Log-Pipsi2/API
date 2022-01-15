@@ -17,8 +17,6 @@ namespace Core
 
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
-            //services.AddScoped<IBaseRepository<Marker>, BaseRepository<Marker>>();
-
             services.AddScoped<IMarkerRepository, MarkerRepository>();
             services.AddScoped<IMarkerCrudService, MarkerCrudService>();
 
