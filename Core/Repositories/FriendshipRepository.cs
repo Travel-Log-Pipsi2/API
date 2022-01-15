@@ -24,8 +24,8 @@ namespace Core.Repositories
         {
             var loggedId = _loggedUserProvider.GetUserId();
             if (accepted)
-                return await _context.Friendships.Where(f => f.IsAccepted && f.FromFriend == loggedId || f.ToFriend == loggedId).ToListAsync();
-            return await _context.Friendships.Where(f => f.IsAccepted == accepted && f.ToFriend == loggedId).ToListAsync();
+                return await _context.Friendships.Where(f => f.IsAccepted && (f.FromFriend == loggedId || f.ToFriend == loggedId)).ToListAsync();
+            return await _context.Friendships.Where(f => f.IsAccepted == false && f.ToFriend == loggedId).ToListAsync();
         }
 
         public async Task<bool> DeleteFriendshipByFriend(Guid friendId)
