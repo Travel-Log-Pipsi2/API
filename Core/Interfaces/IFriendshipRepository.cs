@@ -10,8 +10,9 @@ namespace Core.Interfaces
         public Task<Friendship> GetFriendship(int requestId);
         public Task<IEnumerable<Friendship>> GetFriendships(bool accepted);
         public Task<bool> CreateFriendship(Guid toId);
-        public Task SaveFriendship(Friendship frienship);
-        public Task<bool> DeleteFrienshipByFriend(Guid friendId);
-        public Task<bool> DeleteFrienshipByInvitation(int requestId);
+        public Task AcceptFriendship(Friendship frienship);
+        public Task ReadFriendship(Friendship frienship);
+        public Task<bool> DeleteFriendshipByFriend(Guid friendId);
+        public Task<bool> DeleteFriendshipByInvitation(int requestId);
     }
 }

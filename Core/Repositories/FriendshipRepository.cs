@@ -28,15 +28,15 @@ namespace Core.Repositories
             return await _context.Friendships.Where(f => f.IsAccepted == accepted && f.ToFriend == loggedId).ToListAsync();
         }
 
-        public async Task<bool> DeleteFrienshipByFriend(Guid friendId)
+        public async Task<bool> DeleteFriendshipByFriend(Guid friendId)
         {
             var loggedId = _loggedUserProvider.GetUserId();
 
-            var frienship = await _context.Friendships.Where(f => f.IsAccepted && (f.FromFriend == loggedId && f.ToFriend == friendId) || f.ToFriend == loggedId && f.FromFriend == friendId).FirstOrDefaultAsync();
-            if (frienship == null)
+            var friendship = await _context.Friendships.Where(f => f.IsAccepted && (f.FromFriend == loggedId && f.ToFriend == friendId) || f.ToFriend == loggedId && f.FromFriend == friendId).FirstOrDefaultAsync();
+            if (friendship == null)
                 return false;
 
-            await Delete(frienship);
+            await Delete(friendship);
             return true;
         }
 
@@ -44,8 +44,8 @@ namespace Core.Repositories
         {
             var loggedId = _loggedUserProvider.GetUserId();
 
-            var frienship = await _context.Friendships.Where(f => f.Id == requestId && f.FromFriend == loggedId || f.ToFriend == loggedId).FirstOrDefaultAsync();
-            return frienship;
+            var friendship = await _context.Friendships.Where(f => f.Id == requestId && f.FromFriend == loggedId || f.ToFriend == loggedId).FirstOrDefaultAsync();
+            return friendship;
         }
 
         public async Task<bool> CreateFriendship(Guid toId)
@@ -71,21 +71,28 @@ namespace Core.Repositories
             return true;
         }
 
-        public async Task<bool> DeleteFrienshipByInvitation(int requestId)
+        public async Task<bool> DeleteFriendshipByInvitation(int requestId)
         {
             var loggedId = _loggedUserProvider.GetUserId();
 
-            var frienship = await _context.Friendships.Where(f => f.IsAccepted == false && f.Id == requestId && f.ToFriend == loggedId || f.FromFriend == loggedId).FirstOrDefaultAsync();
-            if (frienship == null)
+            var friendship = await _context.Friendships.Where(f => f.IsAccepted == false && f.Id == requestId && f.ToFriend == loggedId || f.FromFriend == loggedId).FirstOrDefaultAsync();
+            if (friendship == null)
                 return false;
 
-            await Delete(frienship);
+            await Delete(friendship);
             return true;
         }
 
-        public async Task SaveFriendship(Friendship frienship)
+        public async Task AcceptFriendship(Friendship friendship)
         {
-            await Edit(frienship);
+            friendship.IsAccepted = true;
+            await Edit(friendship);
+        }
+
+        public async Task ReadFriendship(Friendship friendship)
+        {
+            friendship.Notification = false;
+            await Edit(friendship);
         }
 
     }

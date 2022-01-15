@@ -78,15 +78,14 @@ namespace Core.Services
         public async Task<ServiceResponse> AcceptFriend(int requestId)
         {
             var request = await _friendshipRepository.GetFriendship(requestId);
-            request.IsAccepted = true;
-            await _friendshipRepository.SaveFriendship(request);
+            await _friendshipRepository.AcceptFriendship(request);
 
             return ServiceResponse.Success("Friend accepted");
         }
 
         public async Task<ServiceResponse> DeleteFriend(Guid friendId)
         {
-            var deleted = await _friendshipRepository.DeleteFrienshipByFriend(friendId);
+            var deleted = await _friendshipRepository.DeleteFriendshipByFriend(friendId);
             if (deleted)
                 return ServiceResponse.Success("Friend deleted");
             return ServiceResponse.Error("Error deleting friend");
@@ -94,7 +93,7 @@ namespace Core.Services
 
         public async Task<ServiceResponse> DeleteInvitation(int requestId)
         {
-            var deleted = await _friendshipRepository.DeleteFrienshipByInvitation(requestId);
+            var deleted = await _friendshipRepository.DeleteFriendshipByInvitation(requestId);
             if (deleted)
                 return ServiceResponse.Success("Invitation deleted");
             return ServiceResponse.Error("Error deleting friend invitation");
@@ -103,8 +102,7 @@ namespace Core.Services
         public async Task<ServiceResponse> ReadRequest(int requestId)
         {
             var friendship = await _friendshipRepository.GetFriendship(requestId);
-            friendship.Notification = false;
-            await _friendshipRepository.SaveFriendship(friendship);
+            await _friendshipRepository.ReadFriendship(friendship);
 
             return ServiceResponse.Success("Notificated");
         }
