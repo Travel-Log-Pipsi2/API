@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace WebApi.Controllers
 {
+
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FetchPostsController : ControllerBase
     {
+
         readonly IFetchPostsService _fetchService;
 
         public FetchPostsController(IFetchPostsService fetchService)
