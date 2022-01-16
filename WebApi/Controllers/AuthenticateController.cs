@@ -35,11 +35,12 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("Confirm-email")]
-        public async Task<ServiceResponse> ConfirmEmail(string token, string email)
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             ConfirmEmailRequest model = new() { Token = token, Email = email };
 
-            return await _authenticateService.ConfirmEmail(model);
+            await _authenticateService.ConfirmEmail(model);
+            return Redirect("https://frosty-leakey-61ac66.netlify.app/login");
         }
 
         [HttpPost]
